@@ -1,11 +1,14 @@
 .bodyContainer {
-    background-color: #FEFAEA
+    background-color: #FEFAEA;
+    min-height: calc(100vh - 147px);
+    padding-bottom: 40px;
 }
 
 .profileContainer {
     display: flex;
     width: 90%;
-    height: 60vh;
+    min-height: 60vh;
+    height: auto;
     margin: auto;
     justify-content: space-evenly;
 }
@@ -21,8 +24,10 @@
         align-items: center;
         justify-content: center;
         background-color: #2CC0EC;
-        width: 540px;
-        height: 360px;
+        max-width: 540px;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 2;
         margin: 40px;
         border-radius: 28px;
     }
@@ -32,6 +37,7 @@
         border-radius: 50%;
         width: 200px;
         height: 200px;
+        object-fit: cover;
     }
 
 }
@@ -61,7 +67,8 @@ button {
     border-radius: 20px;
     color: #0a3838;
     cursor: pointer;
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
 }
 
 .buttonContainer {
@@ -98,12 +105,49 @@ button {
         height: auto;
         align-items: center;
         flex-direction: column;
+        width: 95%;
+    }
+
+    .profileImageContainer {
+        width: 100%;
+
+        .image {
+            margin: 20px auto;
+            max-width: 90%;
+        }
+
+        img {
+            width: 140px;
+            height: 140px;
+        }
+    }
+
+    .profileInfoContainer {
+        margin: 20px 10px;
+        align-items: center;
+        text-align: center;
+
+        h2 {
+            font-size: clamp(32px, 6vw, 48px);
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: clamp(16px, 3.5vw, 24px);
+            word-break: break-word;
+        }
     }
 
     .buttonContainer {
-        margin-top: 60px;
+        margin-top: 30px;
         margin-bottom: 40px;
         flex-direction: column;
         width: 100%;
+        padding: 0 20px;
+    }
+
+    button {
+        max-width: 340px;
+        font-size: 18px;
     }
 }
