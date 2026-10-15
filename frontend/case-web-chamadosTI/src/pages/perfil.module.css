@@ -1,0 +1,109 @@
+.bodyContainer {
+    background-color: #FEFAEA
+}
+
+.profileContainer {
+    display: flex;
+    width: 90%;
+    height: 60vh;
+    margin: auto;
+    justify-content: space-evenly;
+}
+
+
+.profileImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #2CC0EC;
+        width: 540px;
+        height: 360px;
+        margin: 40px;
+        border-radius: 28px;
+    }
+
+
+    img {
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+    }
+
+}
+
+.profileInfoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Inria Serif';
+    gap: 10px;
+    margin: 40px;
+
+    h2 {
+        font-size: 64px;
+        color: #2CC0EC;
+        margin-bottom: 20px;
+    }
+
+    a {
+        color: #2CC0EC;
+    }
+}
+
+button {
+    border: 0;
+    padding: 10px;
+    border-radius: 20px;
+    color: #0a3838;
+    cursor: pointer;
+    width: 400px;
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.deleteButton {
+    background-color: #F60206;
+    transition: ease-in-out 0.2s;
+}
+
+.deleteButton:hover {
+    background-color: #f60206a4;
+    transition: ease-in-out 0.2s;
+    color: black;
+}
+
+.updateButton {
+    background-color: #93FEA6;
+}
+
+.updateButton:hover {
+    background-color: #93fea7ad;
+    transition: ease-in-out 0.2s;
+    color: black;
+}
+
+@media screen and (max-width: 1050px) {
+    .profileContainer {
+        height: auto;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .buttonContainer {
+        margin-top: 60px;
+        margin-bottom: 40px;
+        flex-direction: column;
+        width: 100%;
+    }
+}
