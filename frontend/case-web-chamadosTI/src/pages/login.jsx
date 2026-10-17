@@ -12,8 +12,8 @@ export default function Login() {
         if (!email || !senha) {
             alert("Por favor, preencha todos os campos.")
         } else {
-            alert('Login realizado com sucesso!\nEmail: ${email}')
-            console.log('Login realizado com sucesso!\nEmail: ${email}\nSenha: ${senha}')
+            alert(`Login realizado com sucesso!\nEmail: ${email}`)
+            console.log(`Login realizado com sucesso!\nEmail: ${email}\nSenha: ${senha}`)
             navigate("/perfil")
         }
     }
@@ -34,7 +34,7 @@ export default function Login() {
 
                     <a href="#" className={styles.forgot}>Esqueci minha senha</a>
                     <button type="submit" className={styles.btn}>Entrar</button>
-                    <a href="#" className={styles.register}>Ainda não tenho conta</a>
+                    <a href="/cadastro" className={styles.register}>Ainda não tenho conta</a>
                 </form>
             </div>
         </div>

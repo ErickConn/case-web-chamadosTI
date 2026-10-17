@@ -10,7 +10,8 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/perfil" element={<Perfil />} />
-        <Route path="/login" element={<Login />} />  
+        <Route path="/login" element={<Login />} /> 
+        <Route path="/cadastro" element={<Cadastro />} /> 
       </Routes>
     </BrowserRouter>
   </StrictMode>
