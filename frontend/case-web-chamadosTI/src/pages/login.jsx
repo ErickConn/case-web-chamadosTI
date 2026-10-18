@@ -32,7 +32,7 @@ export default function Login() {
                     <label htmlFor="senha">Senha</label>
                     <input type="password" id="senha" placeholder="Digite sua senha" required></input>
 
-                    <a href="#" className={styles.forgot}>Esqueci minha senha</a>
+                    <a href="/esqueci-senha" className={styles.forgot}>Esqueci minha senha</a>
                     <button type="submit" className={styles.btn}>Entrar</button>
                     <a href="/cadastro" className={styles.register}>Ainda não tenho conta</a>
                 </form>

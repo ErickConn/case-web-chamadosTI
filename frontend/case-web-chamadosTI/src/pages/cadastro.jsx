@@ -25,11 +25,9 @@ export default function Cadastro() {
   return (
     <div className={styles.bodyContainer}>
       <div className={styles.registerBox}>
-
         <a href="/login" className={styles.backLink}>
           ←
         </a>
-
         <div className={styles.logo}>
           <img src="/logo.png" alt="Helpdesk Logo" />
           <h2>Cadastro</h2>
