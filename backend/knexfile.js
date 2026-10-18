@@ -1,6 +1,11 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+export default {
     client: 'pg',
     connection: {
         connectionString: process.env.conn_string,
@@ -8,10 +13,10 @@ module.exports = {
         port: process.env.db_port,
         user: process.env.user,
         database: process.env.db,
-        password: process.env.password
+        password: String(process.env.password || '').trim()
     },
     migrations: {
         tablename: 'migrations',
         directory: `${__dirname}/src/database`
     }
-}
+};

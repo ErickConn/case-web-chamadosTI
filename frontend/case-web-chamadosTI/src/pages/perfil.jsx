@@ -37,8 +37,13 @@ export default function Perfil() {
         fetchPerfil();
     }, []);
 
-    function handleExcluirPerfil() {
-        console.log("Confirmado: excluir perfil do usuário com id 1");
+    async function handleExcluirPerfil() {
+        const res = await axios.delete('http://localhost:3000/perfil', {
+            params: {
+                id: 1,
+            }
+        })
+        console.log(res);
         setModalAberto(false);
     }
 
