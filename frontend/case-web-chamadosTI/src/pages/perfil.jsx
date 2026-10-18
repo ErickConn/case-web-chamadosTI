@@ -1,7 +1,38 @@
-import styles from './perfil.module.css'
-import Header from '../components/header'
+import styles from './perfil.module.css';
+import Header from '../components/header';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 
 export default function Perfil() {
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [cargo, setCargo] = useState('');
+    const [tipo, setTipo] = useState('');
+
+    async function fetchPerfil() {
+        try {
+            const res = await axios.get('http://localhost:3000/perfil', {
+                params: {
+                    id: 1
+                }
+            });
+            const usuario = res.data.response?.usuario;
+            if (usuario) {
+                setNome(usuario.nome || '');
+                setEmail(usuario.email || '');
+                setCargo(usuario.cargo || '');
+                setTipo(usuario.tipo_perfil || '');
+            }
+        } catch (err) {
+            console.error("Erro ao carregar perfil:", err);
+        }
+    }
+
+    useEffect(() => {
+        fetchPerfil();
+    }, []);
+
     return (
         <div>
             <Header></Header>
@@ -14,10 +45,10 @@ export default function Perfil() {
                     </div>
                     <div className={styles.profileInfoContainer}>
                         <h2>Informações</h2>
-                        <p><a>Nome: </a><span>Nome do Usuário</span></p>
-                        <p><a>Email: </a><span>Email do Usuário</span></p>
-                        <p><a>Cargo: </a><span>Cargo do Usuário</span></p>
-                        <p><a>Tipo de Perfil: </a><span>Tipo de Perfil do Usuário</span></p>
+                        <p><a>Nome: </a><span>{nome}</span></p>
+                        <p><a>Email: </a><span>{email}</span></p>
+                        <p><a>Cargo: </a><span>{cargo}</span></p>
+                        <p><a>Tipo de Perfil: </a><span>{tipo}</span></p>
                     </div>
                 </div>
                 <div className={styles.buttonContainer}>
