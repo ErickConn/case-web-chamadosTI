@@ -2,11 +2,11 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function (knex) {
+export async function up(knex) {
     return knex.schema.createTable('chamado', function (table) {
         table.increments();
-        table.string('titulo').notNullable;
-        table.enu('status', ['aberto', 'aguardando resposta', 'fechado', 'resolvido']).notNullable;
+        table.string('titulo').notNullable();
+        table.enu('status', ['aberto', 'aguardando resposta', 'fechado', 'resolvido']).notNullable();
         table.text('descricao');
         table.string('categoria');
         table.enu('prioridade', ['baixa', 'média', 'alta', 'urgente']);
@@ -22,6 +22,6 @@ exports.up = function (knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function (knex) {
+export async function down(knex) {
     return knex.schema.dropTable('chamado');
 };

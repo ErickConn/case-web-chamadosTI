@@ -16,7 +16,7 @@ export default {
         password: String(process.env.password || '').trim()
     },
     migrations: {
-        tablename: 'migrations',
-        directory: `${__dirname}/src/database`
+        tableName: 'knex_migrations',
+        directory: `${__dirname}/src/database/migrations`
     }
 };
