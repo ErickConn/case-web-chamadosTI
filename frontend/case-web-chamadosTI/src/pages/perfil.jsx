@@ -2,6 +2,8 @@ import styles from './perfil.module.css';
 import Header from '../components/header';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import DeleteModal from '../components/deleteModal';
+import UpdateModal from '../components/updateModal';
 
 
 export default function Perfil() {
@@ -9,6 +11,8 @@ export default function Perfil() {
     const [email, setEmail] = useState('');
     const [cargo, setCargo] = useState('');
     const [tipo, setTipo] = useState('');
+    const [modalAberto, setModalAberto] = useState(false);
+    const [updateModalAberto, setUpdateModalAberto] = useState(false);
 
     async function fetchPerfil() {
         try {
@@ -33,6 +37,25 @@ export default function Perfil() {
         fetchPerfil();
     }, []);
 
+    function handleExcluirPerfil() {
+        console.log("Confirmado: excluir perfil do usuário com id 1");
+        setModalAberto(false);
+    }
+
+    async function handleAtualizarPerfil(dadosAtualizados) {
+        const res = await axios.put('http://localhost:3000/perfil', {
+            id: 1,
+            ...dadosAtualizados
+        });
+        const usuarioAtualizado = res.data.response?.usuario;
+        if (usuarioAtualizado) {
+            setNome(usuarioAtualizado.nome);
+            setEmail(usuarioAtualizado.email);
+            setCargo(usuarioAtualizado.cargo);
+            setTipo(usuarioAtualizado.tipo_perfil);
+        }
+    }
+
     return (
         <div>
             <Header></Header>
@@ -52,10 +75,36 @@ export default function Perfil() {
                     </div>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button className={styles.deleteButton}>Excluir Perfil</button>
-                    <button className={styles.updateButton}>Atualizar Perfil</button>
+                    <button
+                        type="button"
+                        className={styles.deleteButton}
+                        onClick={() => setModalAberto(true)}
+                    >
+                        Excluir Perfil
+                    </button>
+                    <button
+                        type="button"
+                        className={styles.updateButton}
+                        onClick={() => setUpdateModalAberto(true)}
+                    >
+                        Atualizar Perfil
+                    </button>
                 </div>
             </div>
+
+            <DeleteModal
+                isOpen={modalAberto}
+                onClose={() => setModalAberto(false)}
+                onConfirm={handleExcluirPerfil}
+                nome={nome}
+            />
+
+            <UpdateModal
+                isOpen={updateModalAberto}
+                onClose={() => setUpdateModalAberto(false)}
+                usuarioAtual={{ nome, email, cargo, tipo }}
+                onSave={handleAtualizarPerfil}
+            />
         </div >
     )
 }

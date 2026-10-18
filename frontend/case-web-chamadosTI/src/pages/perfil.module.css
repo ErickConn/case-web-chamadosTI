@@ -56,8 +56,19 @@
         margin-bottom: 20px;
     }
 
+    p {
+        font-size: 32px;
+        margin: 0;
+    }
+
     a {
-        color: #2CC0EC;
+        color: #2CC0EC !important;
+        text-decoration: none;
+        font-size: 32px;
+    }
+
+    span {
+        font-size: 32px;
     }
 }
 
@@ -69,6 +80,8 @@ button {
     cursor: pointer;
     max-width: 400px;
     width: 100%;
+    font-size: 26px;
+    font-family: 'Inria Serif', serif;
 }
 
 .buttonContainer {

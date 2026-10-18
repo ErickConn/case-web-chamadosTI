@@ -1,0 +1,48 @@
+.modalContent {
+    font-family: 'Inria Serif', serif;
+    background-color: #FEFAEA;
+    border-radius: 20px;
+    border: 2px solid #2CC0EC;
+    color: #2CC0EC;
+}
+
+.modalTitle {
+    color: #2CC0EC;
+    font-weight: bold;
+}
+
+.cancelButton {
+    background-color: #6c757d;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 10px 28px;
+    font-family: 'Inria Serif', serif;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    min-width: 140px;
+    transition: all 0.2s ease-in-out;
+}
+
+.cancelButton:hover {
+    background-color: #5c636a;
+    color: #ffffff;
+}
+
+.saveButton {
+    background-color: #93FEA6;
+    color: #0a3838;
+    border-radius: 20px;
+    padding: 10px 28px;
+    font-family: 'Inria Serif', serif;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    min-width: 180px;
+    transition: all 0.2s ease-in-out;
+}
+
+.saveButton:hover {
+    background-color: #7ce891;
+    color: #000000;
+}
