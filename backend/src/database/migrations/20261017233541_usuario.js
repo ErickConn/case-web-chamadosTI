@@ -2,12 +2,12 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function (knex) {
+export async function up(knex) {
     return knex.schema.createTable('usuario', function (table) {
         table.increments();
-        table.string('nome').notNullable;
-        table.string('email').notNullable;
-        table.string('senha').notNullable;
+        table.string('nome').notNullable();
+        table.string('email').notNullable();
+        table.string('senha').notNullable();
         table.string('cargo');
         table.string('setor');
         table.enu('tipo_perfil', ['solicitante', 'técnico']).notNullable;
@@ -18,6 +18,6 @@ exports.up = function (knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function (knex) {
+export async function down(knex) {
     return knex.schema.dropTable('usuario')
 };

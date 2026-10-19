@@ -1,1 +1,1 @@
-// Autorização
+// Autorização e autenticação
