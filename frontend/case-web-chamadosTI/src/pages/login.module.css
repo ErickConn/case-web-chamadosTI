@@ -1,7 +1,7 @@
 .bodyContainer {
     margin: 0;
     background: linear-gradient(135deg, #93FEA6, #2CC0EC);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@
     background: #2CC0EC;
     border-radius: 12px;
     padding: 40px;
-    width: 320px;
+    width: 400px;
     box-shadow: 0 4px 12px #93fea7ad; 
     text-align: center;
 }
@@ -33,21 +33,27 @@ form label {
     margin: 10px 0 5px;
     font-weight: bold;
     color: #FEFAEA;
+    font-size: 16px;
 }
 
 form input {
     width: 100%;
     padding: 10px;
     border: 1px solid #FEFAEA;
+    background-color: #FEFAEA;
     border-radius: 6px;
     margin-bottom: 15px;
     color: #2CC0EC;
 }
 
+input::placeholder {
+  color: #2CC0EC; 
+}
+
 .forgot, .register {
     display: block;
     margin: 10px 0;
-    font-size: 0.9em;
+    font-size: 14px;
     color: #93FEA6;
     text-decoration: none;
 }
@@ -62,7 +68,7 @@ form input {
     border: none;
     border-radius: 6px;
     color: #FEFAEA;
-    font-size: 1em;
+    font-size: 24px;
     cursor: pointer;
     margin-top: 10px;
 }

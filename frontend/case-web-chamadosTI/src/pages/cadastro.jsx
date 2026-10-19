@@ -16,8 +16,7 @@ export default function Cadastro() {
       alert("Por favor, preencha todos os campos.")
     } else {
       alert(`Cadastro realizado!\nNome: ${nome}\nEmail: ${email}\nCargo: ${cargo}\nPerfil: ${perfil}`)
-      console.log(`Cadastro realizado com sucesso!\nNome: ${nome}\nEmail: ${email}\nSenha: ${senha}\nCargo: ${cargo}\nPerfil: ${perfil}`)
-      // Redireciona para login
+      console.log(`Nome: ${nome}\nEmail: ${email}\nSenha: ${senha}\nCargo: ${cargo}\nPerfil: ${perfil}`)
       navigate("/perfil")
     }
   }

@@ -13,7 +13,7 @@ export default function Login() {
             alert("Por favor, preencha todos os campos.")
         } else {
             alert(`Login realizado com sucesso!\nEmail: ${email}`)
-            console.log(`Login realizado com sucesso!\nEmail: ${email}\nSenha: ${senha}`)
+            console.log(`Email: ${email}\nSenha: ${senha}`)
             navigate("/perfil")
         }
     }

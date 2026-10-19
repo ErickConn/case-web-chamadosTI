@@ -1,71 +1,69 @@
 .bodyContainer {
-  background: linear-gradient(135deg, #93FEA6, #2CC0EC);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    background: linear-gradient(135deg, #93FEA6, #2CC0EC);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .resetBox {
-  position: relative;
-  background: #2CC0EC;
-  border-radius: 12px;
-  padding: 30px;
-  width: 100%;
-  max-width: 360px;
-  box-shadow: 0 4px 12px #93fea7ad; 
-  text-align: center;
+    position: relative;
+    background: #2CC0EC;
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px #93fea7ad; 
+    text-align: center;
 }
 
-/* Link de voltar */
 .backLink {
-  position: absolute;
-  top: 20px;
-  left: 18px; 
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  color: #93FEA6;
-  cursor: pointer;
-  text-decoration: none;
+    position: absolute;
+    top: 20px;
+    left: 18px; 
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #93FEA6;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .backLink:hover {
-  color: #93fea7ad;
-  transform: scale(1.2);
-  transition: ease-in-out 0.2s;
+    color: #93fea7ad;
+    transform: scale(1.2);
+    transition: ease-in-out 0.2s;
 }
 
-/* Logo */
 .logo img {
-  width: 80px;
+    width: 100px;
 }
 .logo h2 {
-  margin: 10px 0;
-  color: #FEFAEA;
+    margin: 10px 0;
+    color: #FEFAEA;
 }
 
-/* Formulário */
 form label {
-  display: block;
-  text-align: left;
-  margin: 10px 0 5px;
-  font-weight: bold;
-  color: #FEFAEA;
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #FEFAEA;
+    font-size: 16px;
 }
 
 form input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #FEFAEA;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  color: #2CC0EC;
-  font-size: 1em;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #FEFAEA;
+    background-color: #FEFAEA;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    color: #2CC0EC;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
-/* Botão */
 .btn {
     width: 100%;
     padding: 12px;
@@ -73,7 +71,7 @@ form input {
     border: none;
     border-radius: 6px;
     color: #FEFAEA;
-    font-size: 1em;
+    font-size: 24px;
     cursor: pointer;
     margin-top: 10px;
 }
@@ -85,11 +83,11 @@ form input {
 
 /* Responsividade */
 @media screen and (max-width: 720px) {
-  .resetBox {
-    max-width: 90%;
-    padding: 20px;
-  }
-  .logo img {
-    width: 60px;
-  }
+    .resetBox {
+        max-width: 90%;
+        padding: 20px;
+    }
+    .logo img {
+        width: 80px;
+    }
 }

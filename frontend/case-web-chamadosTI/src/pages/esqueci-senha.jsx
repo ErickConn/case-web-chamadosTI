@@ -1,4 +1,4 @@
-import styles from '../styles/esquecisenha.module.css'
+import styles from './esqueci_senha.module.css'
 import { useNavigate } from 'react-router-dom'
 
 export default function EsqueciSenha() {
@@ -12,7 +12,7 @@ export default function EsqueciSenha() {
       alert("Por favor, informe seu email e a nova senha.")
     } else {
       alert(`Senha redefinida com sucesso para o email: ${email}`)
-      console.log(`Senha redefinida com sucesso!\nEmail: ${email}`)
+      console.log(`Nova Senha: ${senha} para o email: ${email}`)
       navigate("/login")
     }
   }
