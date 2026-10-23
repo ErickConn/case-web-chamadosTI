@@ -6,6 +6,7 @@ import Perfil from './pages/perfil.jsx'
 import Login from './pages/login.jsx'
 import Cadastro from './pages/cadastro.jsx'
 import EsqueciSenha from './pages/esqueci-senha.jsx'
+import Sobre from './pages/sobre.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/login" element={<Login />} /> 
         <Route path="/cadastro" element={<Cadastro />} /> 
         <Route path="/esqueci-senha" element={<EsqueciSenha />} />
+        <Route path= "/sobre" element={<Sobre />}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>

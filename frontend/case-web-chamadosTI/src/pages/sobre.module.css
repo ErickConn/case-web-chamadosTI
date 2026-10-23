@@ -1,0 +1,251 @@
+.bodyContainer {
+    background-color: #FEFAEA;
+    min-height: calc(100vh - 147px);
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+
+.sobreContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 30px;
+    width: 90%;
+    margin: 15px auto;
+    padding: 50px 0;
+    box-sizing: border-box;
+}
+
+.sobreTexto {
+    flex: 1;
+    max-width: 650px;
+}
+
+.sobreTexto h1 {
+    color: #2CC0EC;
+    font-size: 56px;
+    font-weight: bold;
+    margin: 15px 0 25px;
+    letter-spacing: 2px;
+}
+
+.sobreTexto p {
+    color: #0a3838;
+    font-size: 23px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.sobreDestaque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    flex: 1;
+    max-width: 420px;
+    min-height: 350px;
+    padding: 35px;
+
+    background-color: #2CC0EC;
+    box-shadow: 0 4px 12px #93fea7ad;
+    border-radius: 28px;
+    box-sizing: border-box;
+}
+
+.sobreDestaque img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.sobreDestaque h2 {
+    color: #0a3838;
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.sobreDestaque p {
+    color: #0a3838;
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+
+/* EQUIPE */
+.equipeContainer {
+    padding: 55px 5%;
+    background-color: #2CC0EC;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.equipeTexto {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #FEFAEA;
+}
+
+.equipeTexto h1 {
+    font-size: 48px;
+    margin: 15px 0;
+}
+
+.equipeTexto h2 {
+    font-size: 40px;
+    margin: 0 0 15px;
+}
+
+.equipeTexto p {
+    font-size: 21px;
+    line-height: 1.6;
+}
+
+.equipeCards {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: 0 auto 60px;
+}
+
+.membroCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    width: 260px;
+    min-height: 230px;
+    padding: 25px;
+    box-sizing: border-box;
+
+    background-color: #FEFAEA;
+    border: 2px solid #2CC0EC;
+    box-shadow: 0 4px 12px #93fea7ad;
+    border-radius: 28px;
+
+    transition: transform 0.2s ease;
+}
+
+.membroCard:hover {
+    transform: translateY(-5px);
+}
+
+.membroIcone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color: #2CC0EC;
+    margin-bottom: 15px;
+}
+
+.membroIcone img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: 50%
+}
+
+.membroCard h3 {
+    color: #0a3838;
+    font-size: 22px;
+    margin: 5px 0;
+}
+
+.membroCard p {
+    color: #2CC0EC;
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+
+/* Links */
+.contatoEmail {
+    display: inline-block;
+    margin: 10px 0;
+    font-size: 21px;
+    color: #93FEA6;
+    text-decoration: none;
+}
+
+.contatoEmail:hover{
+    text-decoration: underline;
+}
+
+
+
+/* RESPONSIVIDADE */
+@media screen and (max-width: 1050px) {
+    .sobreContainer {
+        flex-direction: column;
+        width: 90%;
+        gap: 30px;
+        padding: 40px 0;
+    }
+
+    .sobreTexto {
+        max-width: 100%;
+    }
+
+    .sobreTexto h1 {
+        font-size: clamp(32px, 6vw, 48px);
+    }
+
+    .sobreTexto p {
+        font-size: clamp(17px, 3vw, 21px);
+    }
+
+    .sobreDestaque {
+        width: 100%;
+        max-width: 550px;
+    }
+
+    .equipeTexto h1 {
+        font-size: clamp(30px, 5vw, 42px);
+    }
+
+    .equipeTexto h2 {
+        font-size: clamp(30px, 5vw, 42px);
+    }
+
+    .equipeTexto p {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .equipeContainer {
+        padding: 40px 5%;
+    }
+
+    .equipeCards {
+        gap: 20px;
+    }
+
+    .membroCard {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .sobreDestaque {
+        padding: 25px;
+        min-height: 300px;
+    }
+}
