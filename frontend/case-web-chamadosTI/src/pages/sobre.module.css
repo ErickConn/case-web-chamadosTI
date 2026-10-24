@@ -1,6 +1,7 @@
 .bodyContainer {
     background-color: #FEFAEA;
     min-height: calc(100vh - 147px);
+    height: auto;
     padding-bottom: 40px;
     display: flex;
     flex-direction: column;

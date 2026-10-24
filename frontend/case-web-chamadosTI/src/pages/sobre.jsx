@@ -27,8 +27,6 @@ export default function Sobre() {
         }
     ];
 
-
-
     return (
         <div>
             <Header />
@@ -36,41 +34,31 @@ export default function Sobre() {
                 <section className={styles.sobreContainer}>
                     <div className={styles.sobreTexto}>
                         <h1>Sobre a nossa marca</h1>
-                        <p>
-                            Nossa plataforma foi desenvolvida para
-                            facilitar a comunicação entre usuários
-                            e a equipe de Tecnologia da Informação.
+                        <p> 
+                            Nossa plataforma foi criada para otimizar o suporte técnico dentro das empresas, 
+                            conectando colaboradores e equipe de T.I. de forma simples e eficiente.
+                        </p>
+                        <p> 
+                            Por meio do sistema de chamados, os usuários podem registrar problemas,
+                            acompanhar o andamento das solicitações e interagir diretamente com os
+                            técnicos responsáveis pela solução.
                         </p>
                         <p>
-                            Por meio do sistema de chamados, é possível
-                            registrar problemas técnicos, acompanhar
-                            solicitações e tornar o atendimento mais
-                            organizado, ágil e eficiente.
+                            O objetivo é centralizar o atendimento em um ambiente organizado, garantindo 
+                            agilidade, transparência e melhor comunicação entre solicitantes e técnicos.
                         </p>
                         <p>
-                            Nosso compromisso é transformar dificuldades
-                            tecnológicas em soluções, proporcionando
-                            uma experiência simples e acessível para todos.
-                        </p>
-                        <p>
-                            Acreditamos que a tecnologia deve facilitar o dia a dia.
-                            Por isso, nossa plataforma tem como objetivo centralizar
-                            solicitações de suporte técnico em um ambiente organizado
-                            e acessível.
-                        </p>
-                        <p>
-                            Através do sistema de chamados, os usuários podem registrar
-                            problemas relacionados à tecnologia da informação,
-                            facilitando a comunicação com a equipe responsável e
-                            contribuindo para um atendimento mais eficiente.
+                            Acreditamos que a tecnologia deve facilitar o trabalho e resolver desafios.
+                            Por isso, nossa solução transforma dificuldades em oportunidades de melhoria,
+                            tornando o suporte técnico mais rápido e acessível para todos.
                         </p>
                     </div>
                     <div className={styles.sobreDestaque}>
-                        <img src="/logo.png" alt="Logo da HelpDesk" />
+                        <img src="/logo.png" alt="Logotipo da HelpDesk" />
                         <h2>Tecnologia a serviço das pessoas.</h2>
                         <p>
-                            Mais organização, comunicação e eficiência
-                            para resolver problemas de TI.
+                            Organização, comunicação e eficiência para transformar
+                            desafios de TI em soluções rápidas e acessíveis.
                         </p>
                     </div>
                 </section>
@@ -105,20 +93,6 @@ export default function Sobre() {
                                 <p>{membro.cargo}</p>
                             </div>
                         ))}
-                    </div>
-                    <div className={styles.equipeTexto}>
-                        <h2>Precisa de ajuda?</h2>
-                        <p>
-                            Encontrou algum problema ou precisa de
-                            informações? Entre em contato com nossa
-                            equipe para receber orientação.
-                        </p>
-                        <a
-                            href="mailto:suporte@seudominio.com"
-                            className={styles.contatoEmail}
-                        >
-                            suporte@seudominio.com
-                        </a>
                     </div>
                 </section>
             </div>
