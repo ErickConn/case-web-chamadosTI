@@ -1,4 +1,4 @@
-import styles from './esqueci_senha.module.css'
+import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
 
 export default function EsqueciSenha() {
@@ -19,7 +19,7 @@ export default function EsqueciSenha() {
 
   return (
     <div className={styles.bodyContainer}>
-      <div className={styles.resetBox}>
+      <div className={`${styles.authBox} ${styles.resetBox}`}>
         <a href="/login" className={styles.backLink}>
             ←
         </a>

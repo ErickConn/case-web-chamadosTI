@@ -1,4 +1,4 @@
-import styles from './cadastro.module.css'
+import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -23,7 +23,7 @@ export default function Cadastro() {
 
   return (
     <div className={styles.bodyContainer}>
-      <div className={styles.registerBox}>
+      <div className={`${styles.authBox} ${styles.registerBox}`}>
         <a href="/login" className={styles.backLink}>
           ←
         </a>
@@ -42,16 +42,7 @@ export default function Cadastro() {
           <input type="text" id="senha" name="senha" placeholder="Digite sua senha" required />
 
           <label htmlFor="cargo">Cargo/Setor</label>
-          <select id="cargo" name="cargo" required>
-            <option value="">Selecione...</option>
-            <option value="suporte">Suporte</option>
-            <option value="administrativo">Administrativo</option>
-            <option value="gerencia">Gerência</option>
-            <option value="financeiro">Financeiro</option>
-            <option value="rh">RH</option>
-            <option value="ti">TI</option>
-            <option value="outros">Outros</option>
-          </select>
+          <input type="text" id="cargo" name="cargo" placeholder="Digite seu cargo/setor (Ex: Desenvolvedor, Financeiro)" required />
 
           <label htmlFor="perfil">Tipo de Perfil</label>
           <select id="perfil" name="perfil" required>

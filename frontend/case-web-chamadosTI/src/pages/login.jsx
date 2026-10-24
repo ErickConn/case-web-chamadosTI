@@ -1,4 +1,4 @@
-import styles from './login.module.css'
+import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
@@ -20,7 +20,7 @@ export default function Login() {
 
     return (
         <div className={styles.bodyContainer}>
-            <div className={styles.loginBox}>
+            <div className={`${styles.authBox} ${styles.loginBox}`}>
                 <div className={styles.logo}>
                     <img src='/logo.png' alt="Helpdesk Logo"></img>
                     <h2>Helpdesk</h2>
