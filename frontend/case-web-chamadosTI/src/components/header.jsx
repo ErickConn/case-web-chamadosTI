@@ -8,9 +8,9 @@ export default function Header() {
                 <span>Helpdesk</span>
             </div>
             <div className={styles.menuContainer}>
-                <a>Sobre</a>
-                <a>Área do Solicitante</a>
-                <a>Perfil</a>
+                <a href="/sobre">Sobre</a>
+                <a href="#">Área do Solicitante</a>
+                <a href="/perfil">Perfil</a>
             </div>
 
             <img src='/logo.png' className={styles.profileImage}>
