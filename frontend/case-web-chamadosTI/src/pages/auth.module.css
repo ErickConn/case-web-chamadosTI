@@ -16,43 +16,11 @@
     text-align: center;
     position: relative;
 }
-
 /* Específicos de cada página */
 .loginBox { width: 400px; }
 .registerBox { width: 450px; margin: 20px 0; }
 .resetBox { max-width: 450px; width: 100%; }
-/*
-.loginBox {
-    background: #2CC0EC;
-    border-radius: 12px;
-    padding: 35px;
-    width: 400px;
-    box-shadow: 0 4px 12px #93fea7ad; 
-    text-align: center;
-}
 
-.registerBox {
-    background: #2CC0EC;
-    margin: 20px 0;
-    border-radius: 12px;
-    padding: 35px;
-    width: 450px;
-    box-shadow: 0 4px 12px  #93fea7ad; 
-    text-align: center;
-    position: relative;
-}
-
-.resetBox {
-    background: #2CC0EC;
-    border-radius: 12px;
-    padding: 35px;
-    width: 100%;
-    max-width: 450px;
-    box-shadow: 0 4px 12px #93fea7ad; 
-    text-align: center;
-    position: relative;
-}
-*/
 .backLink {
     position: absolute;
     top: 20px;
