@@ -10,7 +10,7 @@ export async function up(knex) {
         table.string('senha').notNullable();
         table.string('cargo');
         table.string('setor');
-        table.enu('tipo_perfil', ['solicitante', 'técnico']).notNullable;
+        table.enu('tipo_perfil', ['solicitante', 'técnico']).notNullable();
     });
 };
 
