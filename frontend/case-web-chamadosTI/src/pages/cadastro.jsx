@@ -1,43 +1,43 @@
 import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
-
+import { useState } from 'react'
 
 export default function Cadastro() {
   const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
     const form = event.currentTarget
     const usuario = {
-        nome: form.nome.value,
-        email: form.email.value,
-        senha: form.senha.value,
-        cargo: form.cargo.value,
-        perfil: form.perfil.value
+      nome: form.nome.value,
+      email: form.email.value,
+      senha: form.senha.value,
+      cargo: form.cargo.value,
+      perfil: form.perfil.value
     }
 
     try {
-        const response = await fetch('http://localhost:3000/cadastro', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(usuario)
-        })
+      const response = await fetch('http://localhost:3000/cadastro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(usuario)
+      })
 
-        const data = await response.json()
+      const data = await response.json()
 
-        if (!response.ok) {
-            throw new Error(data.message || 'Não foi possível cadastrar.')
-        }
+      if (!response.ok) {
+        throw new Error(data.message || 'Não foi possível cadastrar.')
+      }
 
-        alert(data.message)
-        console.log(`Nome: ${usuario.nome}\nEmail: ${usuario.email}\nSenha: ${usuario.senha}\nCargo: ${usuario.cargo}\nPerfil: ${usuario.perfil}`)
-        navigate('/login')
+      alert(data.message)
+      console.log(`Nome: ${usuario.nome}\nEmail: ${usuario.email}\nSenha: ${usuario.senha}\nCargo: ${usuario.cargo}\nPerfil: ${usuario.perfil}`)
+      navigate('/login')
     } catch (error) {
-        alert(error.message)
+      alert(error.message)
     }
   }
-
 
   return (
     <div className={styles.bodyContainer}>
@@ -57,7 +57,26 @@ export default function Cadastro() {
           <input type="email" id="email" name="email" placeholder="Digite seu email" required />
 
           <label htmlFor="senha">Senha</label>
-          <input type="text" id="senha" name="senha" placeholder="Digite sua senha" required />
+          <div className={styles.passwordContainer}>
+            <input 
+              type={showPassword ? "text" : "password"} 
+              id="senha" 
+              name="senha" 
+              placeholder="Digite sua senha" 
+              required 
+            />
+            <span 
+              onClick={() => setShowPassword(!showPassword)} 
+              className={styles.togglePassword}
+            >
+              <img 
+                src={showPassword 
+                  ? "/icone-senha/esconder.png" 
+                  : "/icone-senha/mostrar.png"} 
+                alt={showPassword ? "Ocultar senha" : "Mostrar senha"} 
+              />
+            </span>
+          </div>
 
           <label htmlFor="cargo">Cargo/Setor</label>
           <input type="text" id="cargo" name="cargo" placeholder="Digite seu cargo/setor (Ex: Desenvolvedor, Financeiro)" required />

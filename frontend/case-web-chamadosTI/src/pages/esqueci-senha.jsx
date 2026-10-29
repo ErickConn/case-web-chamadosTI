@@ -1,8 +1,11 @@
 import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 export default function EsqueciSenha() {
   const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const email = event.target.email.value
@@ -21,7 +24,7 @@ export default function EsqueciSenha() {
     <div className={styles.bodyContainer}>
       <div className={`${styles.authBox} ${styles.resetBox}`}>
         <a href="/login" className={styles.backLink}>
-            ←
+          ←
         </a>
         <div className={styles.logo}>
           <img src="/logo.png" alt="Helpdesk Logo" />
@@ -32,11 +35,29 @@ export default function EsqueciSenha() {
           <input type="email" id="email" name="email" placeholder="Seu email cadastrado" required />
 
           <label htmlFor="senha">Nova Senha</label>
-          <input type="text" id="senha" name="senha" placeholder="Digite sua nova senha" required />
+          <div className={styles.passwordContainer}>
+            <input 
+              type={showPassword ? "text" : "password"} 
+              id="senha" 
+              name="senha" 
+              placeholder="Digite sua nova senha" 
+              required 
+            />
+            <span 
+              onClick={() => setShowPassword(!showPassword)} 
+              className={styles.togglePassword}
+            >
+              <img 
+                src={showPassword 
+                  ? "/icone-senha/esconder.png" 
+                  : "/icone-senha/mostrar.png"} 
+                alt={showPassword ? "Ocultar senha" : "Mostrar senha"} 
+              />
+            </span>
+          </div>
 
           <button type="submit" className={styles.btn}>Salvar Nova Senha</button>
         </form>
-
       </div>
     </div>
   )
