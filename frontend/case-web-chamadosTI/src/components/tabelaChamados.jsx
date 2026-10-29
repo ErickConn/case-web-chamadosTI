@@ -1,6 +1,6 @@
 import styles from './tabelaChamados.module.css'
 
-export default function TabelaChamados({ chamados = [] }) {
+export default function TabelaChamados({ chamados = [], onConversar }) {
     return (
         <table className={styles.chamadosTable}>
             <thead>
@@ -16,13 +16,14 @@ export default function TabelaChamados({ chamados = [] }) {
             <tbody>
                 {chamados.map((chamado) => (
                     <tr key={chamado.id} className={styles.tableData}>
-                        <td>{chamado.id}</td>
+                        <td>{String(chamado.id).startsWith('#') ? chamado.id : `#${chamado.id}`}</td>
                         <td>{chamado.titulo}</td>
                         <td>{chamado.categoria}</td>
                         <td>{chamado.prioridade}</td>
                         <td>{chamado.status}</td>
                         <td
                             className={styles.conversar}
+                            onClick={() => onConversar?.(chamado)}
                         >
                             [conversar]
                         </td>
@@ -32,4 +33,3 @@ export default function TabelaChamados({ chamados = [] }) {
         </table>
     )
 }
-
