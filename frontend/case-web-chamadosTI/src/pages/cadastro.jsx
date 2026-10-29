@@ -4,22 +4,40 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Cadastro() {
   const navigate = useNavigate()
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const nome = event.target.nome.value
-    const email = event.target.email.value
-    const senha = event.target.senha.value
-    const cargo = event.target.cargo.value
-    const perfil = event.target.perfil.value
 
-    if (!nome || !email || !senha || !cargo || !perfil) {
-      alert("Por favor, preencha todos os campos.")
-    } else {
-      alert(`Cadastro realizado!\nNome: ${nome}\nEmail: ${email}\nCargo: ${cargo}\nPerfil: ${perfil}`)
-      console.log(`Nome: ${nome}\nEmail: ${email}\nSenha: ${senha}\nCargo: ${cargo}\nPerfil: ${perfil}`)
-      navigate("/perfil")
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const form = event.currentTarget
+    const usuario = {
+        nome: form.nome.value,
+        email: form.email.value,
+        senha: form.senha.value,
+        cargo: form.cargo.value,
+        perfil: form.perfil.value
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/cadastro', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuario)
+        })
+
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Não foi possível cadastrar.')
+        }
+
+        alert(data.message)
+        console.log(`Nome: ${usuario.nome}\nEmail: ${usuario.email}\nSenha: ${usuario.senha}\nCargo: ${usuario.cargo}\nPerfil: ${usuario.perfil}`)
+        navigate('/login')
+    } catch (error) {
+        alert(error.message)
     }
   }
+
 
   return (
     <div className={styles.bodyContainer}>
@@ -48,7 +66,7 @@ export default function Cadastro() {
           <select id="perfil" name="perfil" required>
             <option value="">Selecione...</option>
             <option value="solicitante">Solicitante</option>
-            <option value="tecnico">Técnico</option>
+            <option value="técnico">Técnico</option>
           </select>
 
           <button type="submit" className={styles.btn}>Salvar</button>
