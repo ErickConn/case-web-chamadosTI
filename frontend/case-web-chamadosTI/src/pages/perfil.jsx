@@ -16,9 +16,10 @@ export default function Perfil() {
 
     async function fetchPerfil() {
         try {
+            const token = localStorage.getItem('token');
             const res = await axios.get('http://localhost:3000/perfil', {
-                params: {
-                    id: 1
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
             });
             const usuario = res.data.response?.usuario;
@@ -38,9 +39,10 @@ export default function Perfil() {
     }, []);
 
     async function handleExcluirPerfil() {
+        const token = localStorage.getItem('token');
         const res = await axios.delete('http://localhost:3000/perfil', {
-            params: {
-                id: 1,
+            headers: {
+                Authorization: `Bearer ${token}`
             }
         })
         console.log(res);
@@ -48,9 +50,11 @@ export default function Perfil() {
     }
 
     async function handleAtualizarPerfil(dadosAtualizados) {
-        const res = await axios.put('http://localhost:3000/perfil', {
-            id: 1,
-            ...dadosAtualizados
+        const token = localStorage.getItem('token');
+        const res = await axios.put('http://localhost:3000/perfil', dadosAtualizados, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
         const usuarioAtualizado = res.data.response?.usuario;
         if (usuarioAtualizado) {

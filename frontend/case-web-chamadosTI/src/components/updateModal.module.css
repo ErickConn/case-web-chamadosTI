@@ -6,9 +6,40 @@
     color: #2CC0EC;
 }
 
+.modalContent label {
+    color: #2CC0EC;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.modalContent input,
+.modalContent select {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    height: 45px;
+    padding: 8px 12px;
+    border: 1px solid #2CC0EC;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #0a3838;
+}
+
+.modalContent select {
+    padding-right: 36px;
+}
+
+.modalContent select option {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    color: #0a3838;
+    background-color: #ffffff;
+}
+
 .modalTitle {
     color: #2CC0EC;
     font-weight: bold;
+    font-size: 28px;
 }
 
 .cancelButton {
