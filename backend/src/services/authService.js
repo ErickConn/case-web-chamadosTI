@@ -24,15 +24,18 @@ async function register(data) {
         const senhaHash = await bcrypt.hash(senha, 10);
 
         // Insere no banco
-        const [id] = await database("usuario").insert({
+        const [usuarioInserido] = await database("usuario").insert({
             nome,
             email,
             senha: senhaHash,
             cargo,
             tipo_perfil: perfil
-        });
+        }).returning('id');
+        const id = usuarioInserido.id;
 
-        return { status: 201, message: "Usuário cadastrado com sucesso", usuario: { id, nome, email, cargo, perfil } };
+        const token = jwt.sign({ id, email, perfil }, JWT_SECRET, { expiresIn: '2h' });
+
+        return { status: 201, message: "Usuário cadastrado com sucesso", token, usuario: { id, nome, email, cargo, perfil }};
     } catch (error) {
         console.error(error);
         return { status: 500, message: error.message || "Erro interno no servidor", data: null };

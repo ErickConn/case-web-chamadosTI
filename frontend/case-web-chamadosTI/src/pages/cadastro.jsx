@@ -31,9 +31,14 @@ export default function Cadastro() {
         throw new Error(data.message || 'Não foi possível cadastrar.')
       }
 
-      alert(data.message)
+      if (!data.token) {
+        throw new Error('O servidor não retornou o token de autenticação.')
+      }
+
+      localStorage.setItem('token', data.token)
+      alert(data.message || 'Usuário cadastrado com sucesso.')
       console.log(`Nome: ${usuario.nome}\nEmail: ${usuario.email}\nSenha: ${usuario.senha}\nCargo: ${usuario.cargo}\nPerfil: ${usuario.perfil}`)
-      navigate('/login')
+      navigate('/perfil')
     } catch (error) {
       alert(error.message)
     }

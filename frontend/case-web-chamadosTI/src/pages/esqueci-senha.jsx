@@ -6,17 +6,33 @@ export default function EsqueciSenha() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const email = event.target.email.value
-    const senha = event.target.senha.value
 
-    if (!email || !senha) {
-      alert("Por favor, informe seu email e a nova senha.")
-    } else {
-      alert(`Senha redefinida com sucesso para o email: ${email}`)
-      console.log(`Nova Senha: ${senha} para o email: ${email}`)
-      navigate("/login")
+    const form = event.currentTarget
+    const email = form.email.value
+    const novaSenha = form.senha.value
+
+    try {
+      const response = await fetch('http://localhost:3000/esqueci-senha', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, novaSenha })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Não foi possível redefinir a senha.')
+      }
+
+      alert(data.message)
+      console.log(`Email: ${email}\nNova Senha: ${novaSenha}`)
+      navigate('/login')
+    } catch (error) {
+      alert(error.message || 'Não foi possível conectar ao servidor.')
     }
   }
 
