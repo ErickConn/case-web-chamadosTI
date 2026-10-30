@@ -1,4 +1,5 @@
 .bodyContainer {
+    margin: 0;
     background: linear-gradient(135deg, #93FEA6, #2CC0EC);
     min-height: 100vh;
     display: flex;
@@ -6,16 +7,19 @@
     align-items: center;
 }
 
-.resetBox {
-    position: relative;
+/* Caixa genérica para login, cadastro e reset */
+.authBox {
     background: #2CC0EC;
     border-radius: 12px;
-    padding: 30px;
-    width: 100%;
-    max-width: 400px;
+    padding: 35px;
     box-shadow: 0 4px 12px #93fea7ad; 
     text-align: center;
+    position: relative;
 }
+/* Específicos de cada página */
+.loginBox { width: 400px; }
+.registerBox { width: 450px; margin: 20px 0; }
+.resetBox { max-width: 450px; width: 100%; }
 
 .backLink {
     position: absolute;
@@ -52,9 +56,10 @@ form label {
     font-size: 16px;
 }
 
-form input {
+form input, form select {
     width: 100%;
-    padding: 12px;
+    height: 45px;
+    padding: 11px;
     border: 1px solid #FEFAEA;
     background-color: #FEFAEA;
     border-radius: 6px;
@@ -64,6 +69,33 @@ form input {
     box-sizing: border-box;
 }
 
+form select option {
+    background-color: #FEFAEA;
+    color: #2CC0EC;
+    font-size: 16px;
+}
+
+input::placeholder {
+  color: #2CC0EC; 
+}
+
+select::placeholder {
+  color: #2CC0EC; 
+}
+
+.forgot, .register {
+    display: block;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #93FEA6;
+    text-decoration: none;
+    transition: ease-in-out 0.2s;
+}
+.forgot:hover, .register:hover, .forgot:focus, .register:focus {
+    text-decoration: underline;
+    outline: none;
+}
+
 .btn {
     width: 100%;
     padding: 12px;
@@ -71,7 +103,7 @@ form input {
     border: none;
     border-radius: 6px;
     color: #FEFAEA;
-    font-size: 24px;
+    font-size: clamp(18px, 4vw, 24px);
     cursor: pointer;
     margin-top: 10px;
 }
@@ -81,13 +113,40 @@ form input {
     color: black;
 }
 
+.passwordContainer {
+  position: relative;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.togglePassword img {
+  width: 20px;
+  height: 20px;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.togglePassword:hover img {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+
 /* Responsividade */
 @media screen and (max-width: 720px) {
-    .resetBox {
-        max-width: 90%;
+    .loginBox, .registerBox, .resetBox {
+        width: 90%;
         padding: 20px;
     }
     .logo img {
         width: 80px;
     }
+
 }

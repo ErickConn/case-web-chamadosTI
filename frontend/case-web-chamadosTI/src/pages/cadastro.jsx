@@ -1,29 +1,52 @@
-import styles from './cadastro.module.css'
+import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
-
+import { useState } from 'react'
 
 export default function Cadastro() {
   const navigate = useNavigate()
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const nome = event.target.nome.value
-    const email = event.target.email.value
-    const senha = event.target.senha.value
-    const cargo = event.target.cargo.value
-    const perfil = event.target.perfil.value
+  const [showPassword, setShowPassword] = useState(false)
 
-    if (!nome || !email || !senha || !cargo || !perfil) {
-      alert("Por favor, preencha todos os campos.")
-    } else {
-      alert(`Cadastro realizado!\nNome: ${nome}\nEmail: ${email}\nCargo: ${cargo}\nPerfil: ${perfil}`)
-      console.log(`Nome: ${nome}\nEmail: ${email}\nSenha: ${senha}\nCargo: ${cargo}\nPerfil: ${perfil}`)
-      navigate("/perfil")
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const form = event.currentTarget
+    const usuario = {
+      nome: form.nome.value,
+      email: form.email.value,
+      senha: form.senha.value,
+      cargo: form.cargo.value,
+      perfil: form.perfil.value
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/cadastro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(usuario)
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Não foi possível cadastrar.')
+      }
+
+      if (!data.token) {
+        throw new Error('O servidor não retornou o token de autenticação.')
+      }
+
+      localStorage.setItem('token', data.token)
+      alert(data.message || 'Usuário cadastrado com sucesso.')
+      console.log(`Nome: ${usuario.nome}\nEmail: ${usuario.email}\nSenha: ${usuario.senha}\nCargo: ${usuario.cargo}\nPerfil: ${usuario.perfil}`)
+      navigate('/perfil')
+    } catch (error) {
+      alert(error.message)
     }
   }
 
   return (
     <div className={styles.bodyContainer}>
-      <div className={styles.registerBox}>
+      <div className={`${styles.authBox} ${styles.registerBox}`}>
         <a href="/login" className={styles.backLink}>
           ←
         </a>
@@ -39,25 +62,35 @@ export default function Cadastro() {
           <input type="email" id="email" name="email" placeholder="Digite seu email" required />
 
           <label htmlFor="senha">Senha</label>
-          <input type="text" id="senha" name="senha" placeholder="Digite sua senha" required />
+          <div className={styles.passwordContainer}>
+            <input 
+              type={showPassword ? "text" : "password"} 
+              id="senha" 
+              name="senha" 
+              placeholder="Digite sua senha" 
+              required 
+            />
+            <span 
+              onClick={() => setShowPassword(!showPassword)} 
+              className={styles.togglePassword}
+            >
+              <img 
+                src={showPassword 
+                  ? "/icone-senha/esconder.png" 
+                  : "/icone-senha/mostrar.png"} 
+                alt={showPassword ? "Ocultar senha" : "Mostrar senha"} 
+              />
+            </span>
+          </div>
 
           <label htmlFor="cargo">Cargo/Setor</label>
-          <select id="cargo" name="cargo" required>
-            <option value="">Selecione...</option>
-            <option value="suporte">Suporte</option>
-            <option value="administrativo">Administrativo</option>
-            <option value="gerencia">Gerência</option>
-            <option value="financeiro">Financeiro</option>
-            <option value="rh">RH</option>
-            <option value="ti">TI</option>
-            <option value="outros">Outros</option>
-          </select>
+          <input type="text" id="cargo" name="cargo" placeholder="Digite seu cargo/setor (Ex: Desenvolvedor, Financeiro)" required />
 
           <label htmlFor="perfil">Tipo de Perfil</label>
           <select id="perfil" name="perfil" required>
             <option value="">Selecione...</option>
             <option value="solicitante">Solicitante</option>
-            <option value="tecnico">Técnico</option>
+            <option value="técnico">Técnico</option>
           </select>
 
           <button type="submit" className={styles.btn}>Salvar</button>
