@@ -1,6 +1,9 @@
 import styles from './header.module.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
+    const nav = useNavigate();
+
     return (
         <div className={styles.headerContainer}>
             <div className={styles.logoContainer}>
@@ -8,12 +11,12 @@ export default function Header() {
                 <span>Helpdesk</span>
             </div>
             <div className={styles.menuContainer}>
-                <a href="/sobre">Sobre</a>
-                <a href="#">Área do Solicitante</a>
-                <a href="/perfil">Perfil</a>
+                <a onClick={() => { nav("/sobre") }}>Sobre</a>
+                <a onClick={() => { nav("/solicitante") }}>Área do Solicitante</a>
+                <a onClick={() => { nav("/perfil") }}>Perfil</a>
             </div>
 
-            <img src='/logo.png' className={styles.profileImage}>
+            <img src='/logo.png' className={styles.profileImage} onClick={() => { nav("/perfil") }}>
 
             </img>
         </div>
