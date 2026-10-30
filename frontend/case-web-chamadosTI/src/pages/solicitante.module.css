@@ -1,0 +1,34 @@
+.chamadosContainer {
+    padding: 0 20px 40px;
+}
+
+.chamadosHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    color: #2CC0EC;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 30px;
+    background-color: #2CC0EC;
+    color: white;
+}
+
+button:hover {
+    background-color: #50bbdb;
+    transition: ease-in-out 0.2s;
+    color: black;
+}
+
+@media screen and (max-width: 900px) {
+    .chamadosHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
