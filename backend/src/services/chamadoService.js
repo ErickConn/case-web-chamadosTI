@@ -26,6 +26,30 @@ async function getChamados() {
     }
 }
 
+async function getChamadosByUser(userId) {
+    if (!userId) {
+        return {
+            status: 400,
+            message: "User ID is required"
+        };
+    }
+
+    try {
+        const chamados = await database('chamado').select("*").where({ userId });
+
+        return {
+            status: 200,
+            chamados,
+            message: "ok"
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            message: error.message || "Internal server error"
+        };
+    }
+}
+
 async function getChamado(chamadoId) {
     if (!chamadoId) {
         return {
@@ -60,6 +84,7 @@ async function getChamado(chamadoId) {
 
 const chamadoService = {
     getChamados,
+    getChamadosByUser,
     getChamado
 }
 

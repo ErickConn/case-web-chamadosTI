@@ -14,7 +14,8 @@ router.post('/cadastro', authController.register);
 router.post('/login', authController.login);
 router.post('/esqueci-senha', authController.resetPassword);
 
-router.get('/solicitante', chamadoController.getChamados);
-router.get('/solicitante/:id', chamadoController.getChamado);
+router.get('/solicitante', authMiddleware, chamadoController.getChamadosByUser);
+router.get('/chamados', authMiddleware, chamadoController.getChamados);
+router.get('/solicitante/:id', authMiddleware, chamadoController.getChamado);
 
 export default router;
