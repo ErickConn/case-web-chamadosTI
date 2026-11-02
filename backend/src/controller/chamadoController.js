@@ -9,6 +9,16 @@ const getChamados = async (req, res) => {
     }
 }
 
+const getChamadosByUser = async (req, res) => {
+    try {
+        const userId = req.user?.id || req.params.id || req.query.id || req.body?.id;
+        const response = await chamadoService.getChamadosByUser(userId);
+        res.status(response.status || 200).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
 const getChamado = async (req, res) => {
     try {
         const chamadoId = req.params.id || req.query.id || req.body?.id;
@@ -21,6 +31,7 @@ const getChamado = async (req, res) => {
 
 const chamadoController = {
     getChamados,
+    getChamadosByUser,
     getChamado
 }
 

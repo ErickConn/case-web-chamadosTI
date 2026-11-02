@@ -2,11 +2,13 @@ import styles from './perfil.module.css';
 import Header from '../components/header';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../components/deleteModal';
 import UpdateModal from '../components/updateModal';
 
 
 export default function Perfil() {
+    const navigate = useNavigate();
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [cargo, setCargo] = useState('');
@@ -15,8 +17,13 @@ export default function Perfil() {
     const [updateModalAberto, setUpdateModalAberto] = useState(false);
 
     async function fetchPerfil() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         try {
-            const token = localStorage.getItem('token');
             const res = await axios.get('http://localhost:3000/perfil', {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -31,6 +38,9 @@ export default function Perfil() {
             }
         } catch (err) {
             console.error("Erro ao carregar perfil:", err);
+            if (err.response?.status === 401) {
+                navigate('/login');
+            }
         }
     }
 
@@ -46,7 +56,9 @@ export default function Perfil() {
             }
         })
         console.log(res);
+        localStorage.removeItem('token');
         setModalAberto(false);
+        navigate('/login');
     }
 
     async function handleAtualizarPerfil(dadosAtualizados) {
