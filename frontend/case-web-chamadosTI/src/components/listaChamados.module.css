@@ -1,0 +1,47 @@
+.chamadosTable {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.chamadosTable th,
+.chamadosTable td {
+    width: 200px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.tableAtributos {
+    display: flex;
+    background-color: #2CC0EC;
+    color: white;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+}
+
+.tableData {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    background-color: white;
+}
+
+.conversar {
+    cursor: pointer;
+}
+
+.conversar:hover {
+    color: rgb(117, 100, 100);
+}
+
+@media screen and (max-width: 900px) {
+    .chamadosTable {
+        align-items: flex-start;
+    }
+}
