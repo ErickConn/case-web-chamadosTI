@@ -1,6 +1,13 @@
 import styles from './tabelaChamados.module.css'
 
-export default function TabelaChamados({ chamados = [], onConversar }) {
+export default function TabelaChamados({
+    chamados = [],
+    onConversar,
+    tituloBotão = 'conversar',
+    usuarioId,
+}) {
+    const isTabelaAtendimento = tituloBotão === 'atender chamado'
+
     return (
         <table className={styles.chamadosTable}>
             <thead>
@@ -14,21 +21,47 @@ export default function TabelaChamados({ chamados = [], onConversar }) {
                 </tr>
             </thead>
             <tbody>
-                {chamados.map((chamado) => (
-                    <tr key={chamado.id} className={styles.tableData}>
-                        <td>{String(chamado.id).startsWith('#') ? chamado.id : `#${chamado.id}`}</td>
-                        <td>{chamado.titulo}</td>
-                        <td>{chamado.categoria}</td>
-                        <td>{chamado.prioridade}</td>
-                        <td>{chamado.status}</td>
-                        <td
-                            className={styles.conversar}
-                            onClick={() => onConversar?.(chamado)}
-                        >
-                            [conversar]
-                        </td>
-                    </tr>
-                ))}
+                {chamados.map((chamado) => {
+                    const atribuidoAoUsuario =
+                        isTabelaAtendimento &&
+                        Boolean(chamado.tecnicoId) &&
+                        Number(chamado.tecnicoId) === Number(usuarioId)
+
+                    const atribuidoAOutro =
+                        isTabelaAtendimento &&
+                        Boolean(chamado.tecnicoId) &&
+                        Number(chamado.tecnicoId) !== Number(usuarioId)
+
+                    const textoBotao = atribuidoAoUsuario
+                        ? 'conversar'
+                        : atribuidoAOutro
+                        ? 'indisponível'
+                        : tituloBotão
+
+                    return (
+                        <tr key={chamado.id} className={styles.tableData}>
+                            <td>{String(chamado.id).startsWith('#') ? chamado.id : `#${chamado.id}`}</td>
+                            <td>{chamado.titulo}</td>
+                            <td>{chamado.categoria}</td>
+                            <td>{chamado.prioridade}</td>
+                            <td>{chamado.status}</td>
+                            <td
+                                className={
+                                    atribuidoAOutro
+                                        ? styles.conversarDesabilitado
+                                        : styles.conversar
+                                }
+                                onClick={() => {
+                                    if (!atribuidoAOutro) {
+                                        onConversar?.(chamado)
+                                    }
+                                }}
+                            >
+                                [{textoBotao}]
+                            </td>
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>
     )

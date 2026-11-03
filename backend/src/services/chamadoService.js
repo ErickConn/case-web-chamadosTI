@@ -82,10 +82,57 @@ async function getChamado(chamadoId) {
     }
 }
 
+async function atribuirChamado(chamadoId, tecnicoId) {
+    if (!chamadoId || !tecnicoId) {
+        return {
+            status: 400,
+            message: "Chamado ID and Tecnico ID are required"
+        };
+    }
+
+    try {
+        const chamadoExistente = await database('chamado').select("*").where({ id: chamadoId }).first();
+
+        if (!chamadoExistente) {
+            return {
+                status: 404,
+                message: "Chamado not found"
+            };
+        }
+
+        if (chamadoExistente.tecnicoId) {
+            return {
+                status: 409,
+                message: "Este chamado já está sendo atendido por um técnico"
+            };
+        }
+
+        await database('chamado')
+            .where({ id: chamadoId })
+            .update({
+                tecnicoId,
+                status: 'aguardando resposta'
+            });
+
+        const chamado = await database('chamado').select("*").where({ id: chamadoId }).first();
+        return {
+            status: 200,
+            chamado,
+            message: "Chamado atribuído com sucesso"
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            message: error.message || "Internal server error"
+        };
+    }
+}
+
 const chamadoService = {
     getChamados,
     getChamadosByUser,
-    getChamado
+    getChamado,
+    atribuirChamado
 }
 
 export default chamadoService;

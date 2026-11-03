@@ -10,7 +10,7 @@ export default function CriarChamado() {
     const categoria = event.target.categoria.value
     const prioridade = event.target.prioridade.value
     const descricao = event.target.descricao.value
-    
+
 
     if (!titulo || !categoria || !prioridade || !descricao) {
       alert("Por favor, preencha todos os campos.")
@@ -23,7 +23,7 @@ export default function CriarChamado() {
   return (
     <div className={styles.bodyContainer}>
       <div className={styles.registerBox}>
-        <a href="/login" className={styles.backLink}>
+        <a onClick={() => navigate(-1)} className={styles.backLink}>
           ←
         </a>
         <div className={styles.logo}>

@@ -16,6 +16,7 @@ router.post('/esqueci-senha', authController.resetPassword);
 
 router.get('/solicitante', authMiddleware, chamadoController.getChamadosByUser);
 router.get('/chamados', authMiddleware, chamadoController.getChamados);
+router.put('/chamados/:id/atribuir', authMiddleware, chamadoController.atribuirChamado);
 router.get('/solicitante/:id', authMiddleware, chamadoController.getChamado);
 
 export default router;
