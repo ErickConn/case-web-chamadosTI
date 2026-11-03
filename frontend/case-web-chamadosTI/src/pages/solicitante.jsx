@@ -5,6 +5,7 @@ import Header from '../components/header'
 import Dashboard from '../components/dashboard'
 import FiltrosChamados from '../components/filtrosChamados'
 import TabelaChamados from '../components/tabelaChamados'
+import AtenderChamadoModal from '../components/atenderChamadoModal'
 import styles from './solicitante.module.css'
 
 function aplicarFiltros(lista, filtros) {
@@ -30,6 +31,8 @@ export default function Solicitante() {
     const [meusChamados, setMeusChamados] = useState([])
     const [todosChamados, setTodosChamados] = useState([])
     const [usuario, setUsuario] = useState(null)
+    const [chamadoSelecionado, setChamadoSelecionado] = useState(null)
+    const [atenderModalAberto, setAtenderModalAberto] = useState(false)
     const [filtrosMeus, setFiltrosMeus] = useState({
         status: '',
         prioridade: '',
@@ -107,6 +110,36 @@ export default function Solicitante() {
         }))
     }
 
+    function handleAbrirModalAtender(chamado) {
+        if (chamado.tecnicoId) {
+            return
+        }
+        setChamadoSelecionado(chamado)
+        setAtenderModalAberto(true)
+    }
+
+    async function handleConfirmarAtendimento(chamado) {
+        try {
+            const token = localStorage.getItem('token')
+            await axios.put(
+                `http://localhost:3000/chamados/${chamado.id}/atribuir`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            setAtenderModalAberto(false)
+            setChamadoSelecionado(null)
+            fetchDados()
+        } catch (err) {
+            console.error('Erro ao atribuir chamado:', err)
+            alert(err.response?.data?.response?.message || 'Não foi possível atender este chamado.')
+            setAtenderModalAberto(false)
+        }
+    }
+
     const isTecnico =
         usuario?.tipo_perfil?.toLowerCase() === 'técnico' ||
         usuario?.tipo_perfil?.toLowerCase() === 'tecnico'
@@ -141,7 +174,7 @@ export default function Solicitante() {
                     />
                 </div>
                 <TabelaChamados chamados={meusChamadosFiltrados} />
-                <button>Criar Chamado</button>
+                <button onClick={() => navigate('/criar-chamado')}>Criar Chamado</button>
             </div>
 
             {isTecnico && (
@@ -154,9 +187,21 @@ export default function Solicitante() {
                             onFilterChange={handleFiltroTodosChange}
                         />
                     </div>
-                    <TabelaChamados chamados={todosChamadosFiltrados} />
+                    <TabelaChamados
+                        chamados={todosChamadosFiltrados}
+                        tituloBotão='atender chamado'
+                        usuarioId={usuario?.id}
+                        onConversar={handleAbrirModalAtender}
+                    />
                 </div>
             )}
+
+            <AtenderChamadoModal
+                isOpen={atenderModalAberto}
+                onClose={() => setAtenderModalAberto(false)}
+                onConfirm={handleConfirmarAtendimento}
+                chamado={chamadoSelecionado}
+            />
         </>
     )
 }

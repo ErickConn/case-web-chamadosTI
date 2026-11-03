@@ -29,10 +29,22 @@ const getChamado = async (req, res) => {
     }
 }
 
+const atribuirChamado = async (req, res) => {
+    try {
+        const chamadoId = req.params.id || req.body?.id;
+        const tecnicoId = req.user?.id || req.body?.tecnicoId;
+        const response = await chamadoService.atribuirChamado(chamadoId, tecnicoId);
+        res.status(response.status || 200).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
 const chamadoController = {
     getChamados,
     getChamadosByUser,
-    getChamado
+    getChamado,
+    atribuirChamado
 }
 
 export default chamadoController;
