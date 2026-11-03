@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 export default function Header() {
     const nav = useNavigate()
     const [tipoPerfil, setTipoPerfil] = useState('')
+    const [fotoPerfil, setFotoPerfil] = useState('')
 
     useEffect(() => {
         async function fetchTipoPerfil() {
@@ -24,6 +25,9 @@ export default function Header() {
                 const usuario = res.data.response?.usuario
                 if (usuario?.tipo_perfil) {
                     setTipoPerfil(usuario.tipo_perfil.toLowerCase())
+                }
+                if (usuario?.foto) {
+                    setFotoPerfil(usuario.foto)
                 }
             } catch (err) {
                 console.error('Erro ao carregar perfil no header:', err)
@@ -54,7 +58,7 @@ export default function Header() {
             </div>
 
             <img
-                src='/logo.png'
+                src={fotoPerfil || '/logo.png'}
                 className={styles.profileImage}
                 onClick={() => { nav('/perfil') }}
             ></img>

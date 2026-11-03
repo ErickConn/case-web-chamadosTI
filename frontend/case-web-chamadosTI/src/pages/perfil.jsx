@@ -13,6 +13,7 @@ export default function Perfil() {
     const [email, setEmail] = useState('');
     const [cargo, setCargo] = useState('');
     const [tipo, setTipo] = useState('');
+    const [foto, setFoto] = useState('');
     const [modalAberto, setModalAberto] = useState(false);
     const [updateModalAberto, setUpdateModalAberto] = useState(false);
 
@@ -35,6 +36,7 @@ export default function Perfil() {
                 setEmail(usuario.email || '');
                 setCargo(usuario.cargo || '');
                 setTipo(usuario.tipo_perfil || '');
+                setFoto(usuario.foto || '');
             }
         } catch (err) {
             console.error("Erro ao carregar perfil:", err);
@@ -74,6 +76,7 @@ export default function Perfil() {
             setEmail(usuarioAtualizado.email);
             setCargo(usuarioAtualizado.cargo);
             setTipo(usuarioAtualizado.tipo_perfil);
+            setFoto(usuarioAtualizado.foto || '');
         }
     }
 
@@ -84,7 +87,7 @@ export default function Perfil() {
                 <div className={styles.profileContainer}>
                     <div className={styles.profileImageContainer}>
                         <div className={styles.image}>
-                            <img src='/logo.png'></img>
+                            <img src={foto || '/logo.png'} alt={`Foto de ${nome || 'perfil'}`}></img>
                         </div>
                     </div>
                     <div className={styles.profileInfoContainer}>
@@ -123,7 +126,7 @@ export default function Perfil() {
             <UpdateModal
                 isOpen={updateModalAberto}
                 onClose={() => setUpdateModalAberto(false)}
-                usuarioAtual={{ nome, email, cargo, tipo }}
+                usuarioAtual={{ nome, email, cargo, tipo, foto }}
                 onSave={handleAtualizarPerfil}
             />
         </div >

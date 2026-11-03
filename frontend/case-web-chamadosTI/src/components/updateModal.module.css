@@ -36,6 +36,20 @@
     background-color: #ffffff;
 }
 
+.previewImage {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2CC0EC;
+}
+
+.previewText {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    color: #0a3838;
+}
+
 .modalTitle {
     color: #2CC0EC;
     font-weight: bold;
