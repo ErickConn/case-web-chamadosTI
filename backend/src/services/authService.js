@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 async function register(data) {
-    const { nome, email, senha, cargo, perfil } = data;
+    const { nome, email, senha, cargo, perfil, foto } = data;
 
     if (!nome || !email || !senha || !perfil) {
         return { status: 400, message: "Todos os campos obrigatórios devem ser preenchidos", data: null };
@@ -29,13 +29,14 @@ async function register(data) {
             email,
             senha: senhaHash,
             cargo,
-            tipo_perfil: perfil
+            tipo_perfil: perfil,
+            ...(foto ? { foto } : {})
         }).returning('id');
         const id = usuarioInserido.id;
 
         const token = jwt.sign({ id, email, perfil }, JWT_SECRET, { expiresIn: '2h' });
 
-        return { status: 201, message: "Usuário cadastrado com sucesso", token, usuario: { id, nome, email, cargo, perfil }};
+        return { status: 201, message: "Usuário cadastrado com sucesso", token, usuario: { id, nome, email, cargo, perfil, foto: foto || null }};
     } catch (error) {
         console.error(error);
         return { status: 500, message: error.message || "Erro interno no servidor", data: null };
@@ -64,7 +65,7 @@ async function login(data) {
         // Gera token JWT
         const token = jwt.sign({ id: usuario.id, email: usuario.email, perfil: usuario.tipo_perfil }, JWT_SECRET, { expiresIn: "2h" });
 
-        return { status: 200, message: "Login realizado com sucesso", token, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, perfil: usuario.tipo_perfil } };
+        return { status: 200, message: "Login realizado com sucesso", token, usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, perfil: usuario.tipo_perfil, foto: usuario.foto || null } };
     } catch (error) {
         console.error(error);
         return { status: 500, message: error.message || "Erro interno no servidor", data: null };

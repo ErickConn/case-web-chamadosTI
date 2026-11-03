@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { uploadImagemCloudinary } from '../services/cloudinary';
 import styles from './updateModal.module.css';
 
 export default function UpdateModal({
@@ -11,6 +12,8 @@ export default function UpdateModal({
     const [email, setEmail] = useState('');
     const [cargo, setCargo] = useState('');
     const [tipo, setTipo] = useState('solicitante');
+    const [foto, setFoto] = useState('');
+    const [enviandoFoto, setEnviandoFoto] = useState(false);
     const [carregando, setCarregando] = useState(false);
     const [erro, setErro] = useState('');
 
@@ -20,8 +23,10 @@ export default function UpdateModal({
             setEmail(usuarioAtual.email || '');
             setCargo(usuarioAtual.cargo || '');
             setTipo(usuarioAtual.tipo || 'solicitante');
+            setFoto(usuarioAtual.foto || '');
             setErro('');
             setCarregando(false);
+            setEnviandoFoto(false);
         }
     }, [isOpen, usuarioAtual]);
 
@@ -37,6 +42,23 @@ export default function UpdateModal({
 
     if (!isOpen) return null;
 
+    async function handleFileChange(e) {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setEnviandoFoto(true);
+        setErro('');
+
+        try {
+            const url = await uploadImagemCloudinary(file);
+            setFoto(url);
+        } catch (err) {
+            setErro(err.message || 'Erro ao enviar imagem para a CDN.');
+        } finally {
+            setEnviandoFoto(false);
+        }
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
         setCarregando(true);
@@ -47,7 +69,8 @@ export default function UpdateModal({
                 nome,
                 email,
                 cargo,
-                tipo_perfil: tipo
+                tipo_perfil: tipo,
+                foto: foto || null
             });
             onClose();
         } catch (err) {
@@ -151,6 +174,47 @@ export default function UpdateModal({
                                             <option value="técnico">Técnico</option>
                                         </select>
                                     </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="inputFotoArquivo" className="form-label fw-semibold">
+                                            Enviar Foto (Cloudinary CDN)
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="inputFotoArquivo"
+                                            className="form-control"
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                            disabled={enviandoFoto}
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="inputFotoUrl" className="form-label fw-semibold">
+                                            Link da Foto (URL)
+                                        </label>
+                                        <input
+                                            type="url"
+                                            id="inputFotoUrl"
+                                            className="form-control"
+                                            value={foto}
+                                            onChange={(e) => setFoto(e.target.value)}
+                                            placeholder="https://res.cloudinary.com/..."
+                                        />
+                                    </div>
+
+                                    {foto && (
+                                        <div className="col-12 d-flex align-items-center gap-3 mt-2">
+                                            <img
+                                                src={foto}
+                                                alt="Pré-visualização da foto"
+                                                className={styles.previewImage}
+                                            />
+                                            <span className={styles.previewText}>
+                                                {enviandoFoto ? 'Enviando imagem para o Cloudinary...' : 'Pré-visualização da foto'}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
@@ -159,16 +223,20 @@ export default function UpdateModal({
                                     type="button"
                                     className={`btn ${styles.cancelButton}`}
                                     onClick={onClose}
-                                    disabled={carregando}
+                                    disabled={carregando || enviandoFoto}
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     type="submit"
                                     className={`btn ${styles.saveButton}`}
-                                    disabled={carregando}
+                                    disabled={carregando || enviandoFoto}
                                 >
-                                    {carregando ? 'Salvando...' : 'Salvar Alterações'}
+                                    {enviandoFoto
+                                        ? 'Enviando foto...'
+                                        : carregando
+                                        ? 'Salvando...'
+                                        : 'Salvar Alterações'}
                                 </button>
                             </div>
                         </form>
