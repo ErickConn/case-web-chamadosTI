@@ -6,22 +6,22 @@ export default function Sobre() {
     // Informações sobre a equipe, foto serão adicionadas posteriormente
     const equipe = [
         {
-            nome: 'Nome do integrante 1',
+            nome: 'Maria Luíza Bertin',
             cargo: 'Desenvolvedor',
             foto: ''
         },
         {
-            nome: 'Nome do integrante 2',
+            nome: 'Erick Ricardo',
             cargo: 'Analista de Sistemas',
             foto: ''
         },
         {
-            nome: 'Nome do integrante 3',
+            nome: 'JHONATTAN CEBRIAM',
             cargo: 'Suporte de TI',
             foto: ''
         },
         {
-            nome: 'Nome do integrante 4',
+            nome: 'RAFAEL VOIGT',
             cargo: 'Financeiro',
             foto: ''
         }
