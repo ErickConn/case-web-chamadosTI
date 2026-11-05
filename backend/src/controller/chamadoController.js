@@ -2,7 +2,8 @@ import chamadoService from "../services/chamadoService.js";
 
 const getChamados = async (req, res) => {
     try {
-        const response = await chamadoService.getChamados();
+        const userId = req.user?.id;
+        const response = await chamadoService.getChamados(userId);
         res.status(response.status || 200).json({ response });
     } catch (e) {
         res.status(500).json({ erro: e.message });
@@ -40,11 +41,79 @@ const atribuirChamado = async (req, res) => {
     }
 }
 
+const criarSolucao = async (req, res) => {
+    try {
+        const chamadoId = req.params.id || req.body?.chamadoId;
+        const response = await chamadoService.criarSolucao(chamadoId, req.body);
+        res.status(response.status || 201).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
+const responderSolucao = async (req, res) => {
+    try {
+        const chamadoId = req.params.id;
+        const solucaoId = req.params.solucaoId;
+        const { acao } = req.body || {};
+        const response = await chamadoService.responderSolucao(chamadoId, solucaoId, acao);
+        res.status(response.status || 200).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
+const criarAvaliacao = async (req, res) => {
+    try {
+        const chamadoId = req.params.id;
+        const response = await chamadoService.criarAvaliacao(chamadoId, req.body);
+        res.status(response.status || 201).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
+const salvarNota = async (req, res) => {
+    try {
+        const chamadoId = req.params.id;
+        const response = await chamadoService.salvarNota(chamadoId, req.body);
+        res.status(response.status || 200).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
+const updateChamado = async (req, res) => {
+    try {
+        const chamadoId = req.params.id || req.body?.id;
+        const response = await chamadoService.updateChamado(chamadoId, req.body);
+        res.status(response.status || 200).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
+const deleteChamado = async (req, res) => {
+    try {
+        const chamadoId = req.params.id || req.body?.id;
+        const response = await chamadoService.deleteChamado(chamadoId);
+        res.status(response.status || 200).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
 const chamadoController = {
     getChamados,
     getChamadosByUser,
     getChamado,
-    atribuirChamado
+    atribuirChamado,
+    criarSolucao,
+    responderSolucao,
+    criarAvaliacao,
+    salvarNota,
+    updateChamado,
+    deleteChamado
 }
 
 export default chamadoController;

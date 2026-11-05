@@ -1,3 +1,9 @@
+.pageContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .chamadoHeader {
     background: linear-gradient(#93FEA6, #2CC0EC);
     padding: 24px 30px;
@@ -26,9 +32,51 @@
     flex: 1;
 }
 
+.headerTopRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
 .headerInfo h3 {
     font-size: clamp(22px, 3.2vw, 34px);
-    margin-bottom: 12px;
+    margin: 0;
+}
+
+.headerActions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.buttonEditarChamado,
+.buttonExcluirChamado {
+    border: none;
+    border-radius: 16px;
+    padding: 8px 18px;
+    font-size: clamp(14px, 1.8vw, 18px);
+    cursor: pointer;
+    margin: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.buttonEditarChamado {
+    background-color: #93FEA6;
+    color: #0a3838;
+}
+
+.buttonExcluirChamado {
+    background-color: #F51114;
+    color: white;
+}
+
+.buttonEditarChamado:hover,
+.buttonExcluirChamado:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
 }
 
 .headerDetails p {
@@ -39,6 +87,8 @@
 }
 
 .chamadoBody {
+    flex: 1;
+    width: 100%;
     padding: 24px 30px;
     display: flex;
     flex-direction: column;
@@ -75,6 +125,36 @@
     line-height: 1.5;
     margin: 0;
     color: #222;
+}
+
+.messageRejeitada {
+    border: 2px solid #F51114;
+    background-color: #fff5f5;
+}
+
+.messageAceita {
+    border: 2px solid #28a745;
+    background-color: #f4fff6;
+}
+
+.feedbackRejeitado {
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 6px 14px;
+    border-radius: 16px;
+    background-color: #F51114;
+    color: white;
+    font-size: clamp(13px, 1.6vw, 18px);
+}
+
+.feedbackAceito {
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 6px 14px;
+    border-radius: 16px;
+    background-color: #93FEA6;
+    color: #0a3838;
+    font-size: clamp(13px, 1.6vw, 18px);
 }
 
 .notaContainer {
@@ -129,6 +209,7 @@
 }
 
 .inputContainer {
+    margin-top: auto;
     display: flex;
     background-color: #2CC0EC;
     align-items: center;

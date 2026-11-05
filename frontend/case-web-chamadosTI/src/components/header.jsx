@@ -46,7 +46,7 @@ export default function Header() {
     return (
         <div className={styles.headerContainer}>
             <div className={styles.logoContainer}>
-                <img src='./public/logo.png'></img>
+                <img src='/logo.png'></img>
                 <span>Helpdesk</span>
             </div>
             <div className={styles.menuContainer}>

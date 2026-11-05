@@ -1,9 +1,26 @@
 import styles from './filtrosChamados.module.css'
 
-export default function FiltrosChamados({ filtros = {}, onFilterChange }) {
+export default function FiltrosChamados({
+    filtros = {},
+    onFilterChange,
+    mostrarFiltroTecnico = false,
+}) {
     return (
         <div className={styles.filtros}>
             <span>Filtrar por: </span>
+            {mostrarFiltroTecnico && (
+                <select
+                    className={styles.filtro}
+                    name='atribuicao'
+                    id='atribuicao'
+                    value={filtros.atribuicao || ''}
+                    onChange={(e) => onFilterChange?.('atribuicao', e.target.value)}
+                >
+                    <option value=''>Atribuição (Todos)</option>
+                    <option value='meus'>Atribuídos a mim</option>
+                    <option value='disponiveis'>Disponíveis</option>
+                </select>
+            )}
             <select
                 className={styles.filtro}
                 name='status'
