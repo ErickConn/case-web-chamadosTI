@@ -9,6 +9,8 @@ import EsqueciSenha from './pages/esqueci-senha.jsx'
 import Sobre from './pages/sobre.jsx'
 import Solicitante from './pages/solicitante.jsx'
 import CriarChamado from './pages/criar-chamado.jsx'
+import Chamado from './pages/chamado.jsx'
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
@@ -22,7 +24,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/esqueci-senha" element={<EsqueciSenha />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/solicitante" element={<Solicitante />} />
-        <Route path= "/criar-chamado" element={<CriarChamado />}/>
+        <Route path="/criar-chamado" element={<CriarChamado />} />
+        <Route path='/chamado' element={<Chamado />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
