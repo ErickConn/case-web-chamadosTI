@@ -59,6 +59,7 @@ export default function FiltrosChamados({
                 <option value='Software'>Software</option>
                 <option value='Acesso'>Acesso</option>
                 <option value='Rede'>Rede</option>
+                <option value='Outros'>Outros</option>
             </select>
         </div>
     )

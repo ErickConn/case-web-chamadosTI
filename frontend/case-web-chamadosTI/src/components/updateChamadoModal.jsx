@@ -8,7 +8,7 @@ export default function UpdateChamadoModal({
     onSave,
 }) {
     const [titulo, setTitulo] = useState('');
-    const [categoria, setCategoria] = useState('Hardware');
+    const [categoria, setCategoria] = useState('hardware');
     const [prioridade, setPrioridade] = useState('baixa');
     const [descricao, setDescricao] = useState('');
     const [carregando, setCarregando] = useState(false);
@@ -17,7 +17,7 @@ export default function UpdateChamadoModal({
     useEffect(() => {
         if (isOpen && chamadoAtual) {
             setTitulo(chamadoAtual.titulo || '');
-            setCategoria(chamadoAtual.categoria || 'Hardware');
+            setCategoria(chamadoAtual.categoria?.toLowerCase() || 'hardware');
             setPrioridade(chamadoAtual.prioridade?.toLowerCase() || 'baixa');
             setDescricao(chamadoAtual.descricao || '');
             setErro('');
@@ -118,10 +118,11 @@ export default function UpdateChamadoModal({
                                             value={categoria}
                                             onChange={(e) => setCategoria(e.target.value)}
                                         >
-                                            <option value="Hardware">Hardware</option>
-                                            <option value="Software">Software</option>
-                                            <option value="Rede">Rede</option>
-                                            <option value="Acesso">Acesso</option>
+                                            <option value="hardware">Hardware</option>
+                                            <option value="software">Software</option>
+                                            <option value="rede">Rede</option>
+                                            <option value="acesso">Acesso</option>
+                                            <option value="outros">Outros</option>
                                         </select>
                                     </div>
 
