@@ -8,8 +8,15 @@ import TabelaChamados from '../components/tabelaChamados'
 import AtenderChamadoModal from '../components/atenderChamadoModal'
 import styles from './solicitante.module.css'
 
-function aplicarFiltros(lista, filtros) {
+function aplicarFiltros(lista, filtros, usuarioId) {
     return lista.filter((chamado) => {
+        const matchAtribuicao =
+            !filtros.atribuicao ||
+            (filtros.atribuicao === 'meus' &&
+                Boolean(chamado.tecnicoId) &&
+                Number(chamado.tecnicoId) === Number(usuarioId)) ||
+            (filtros.atribuicao === 'disponiveis' && !chamado.tecnicoId)
+
         const matchStatus =
             !filtros.status ||
             chamado.status?.toLowerCase().includes(filtros.status.toLowerCase())
@@ -22,7 +29,7 @@ function aplicarFiltros(lista, filtros) {
             !filtros.categoria ||
             chamado.categoria?.toLowerCase() === filtros.categoria.toLowerCase()
 
-        return matchStatus && matchPrioridade && matchCategoria
+        return matchAtribuicao && matchStatus && matchPrioridade && matchCategoria
     })
 }
 
@@ -39,6 +46,7 @@ export default function Solicitante() {
         categoria: '',
     })
     const [filtrosTodos, setFiltrosTodos] = useState({
+        atribuicao: '',
         status: '',
         prioridade: '',
         categoria: '',
@@ -110,8 +118,15 @@ export default function Solicitante() {
         }))
     }
 
+    function handleConversarMeus(chamado) {
+        navigate(`/chamado/${chamado.id}`)
+    }
+
     function handleAbrirModalAtender(chamado) {
         if (chamado.tecnicoId) {
+            if (Number(chamado.tecnicoId) === Number(usuario?.id)) {
+                navigate(`/chamado/${chamado.id}`)
+            }
             return
         }
         setChamadoSelecionado(chamado)
@@ -144,10 +159,13 @@ export default function Solicitante() {
         usuario?.tipo_perfil?.toLowerCase() === 'técnico' ||
         usuario?.tipo_perfil?.toLowerCase() === 'tecnico'
 
-    const meusChamadosFiltrados = aplicarFiltros(meusChamados, filtrosMeus)
-    const todosChamadosFiltrados = aplicarFiltros(todosChamados, filtrosTodos)
+    const meusChamadosFiltrados = aplicarFiltros(meusChamados, filtrosMeus, usuario?.id)
+    const todosSemProprios = usuario?.id
+        ? todosChamados.filter((c) => Number(c.userId) !== Number(usuario.id))
+        : todosChamados
+    const todosChamadosFiltrados = aplicarFiltros(todosSemProprios, filtrosTodos, usuario?.id)
 
-    const baseDashboard = isTecnico ? todosChamados : meusChamados
+    const baseDashboard = isTecnico ? todosSemProprios : meusChamados
     const abertos = baseDashboard.filter(
         (c) => c.status?.toLowerCase() !== 'fechado' && c.status?.toLowerCase() !== 'resolvido'
     ).length
@@ -173,7 +191,10 @@ export default function Solicitante() {
                         onFilterChange={handleFiltroMeusChange}
                     />
                 </div>
-                <TabelaChamados chamados={meusChamadosFiltrados} />
+                <TabelaChamados
+                    chamados={meusChamadosFiltrados}
+                    onConversar={handleConversarMeus}
+                />
                 <button onClick={() => navigate('/criar-chamado')}>Criar Chamado</button>
             </div>
 
@@ -185,6 +206,7 @@ export default function Solicitante() {
                         <FiltrosChamados
                             filtros={filtrosTodos}
                             onFilterChange={handleFiltroTodosChange}
+                            mostrarFiltroTecnico={true}
                         />
                     </div>
                     <TabelaChamados

@@ -1,0 +1,333 @@
+.pageContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.chamadoHeader {
+    background: linear-gradient(#93FEA6, #2CC0EC);
+    padding: 24px 30px;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.closeBtn {
+    cursor: pointer;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: bold;
+    line-height: 1;
+    padding: 4px 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.closeBtn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.08);
+}
+
+.headerInfo {
+    flex: 1;
+}
+
+.headerTopRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.headerInfo h3 {
+    font-size: clamp(22px, 3.2vw, 34px);
+    margin: 0;
+}
+
+.headerActions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.buttonEditarChamado,
+.buttonExcluirChamado {
+    border: none;
+    border-radius: 16px;
+    padding: 8px 18px;
+    font-size: clamp(14px, 1.8vw, 18px);
+    cursor: pointer;
+    margin: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.buttonEditarChamado {
+    background-color: #93FEA6;
+    color: #0a3838;
+}
+
+.buttonExcluirChamado {
+    background-color: #F51114;
+    color: white;
+}
+
+.buttonEditarChamado:hover,
+.buttonExcluirChamado:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.headerDetails p {
+    font-size: clamp(15px, 2vw, 22px);
+    line-height: 1.4;
+    margin-bottom: 6px;
+    word-break: break-word;
+}
+
+.chamadoBody {
+    flex: 1;
+    width: 100%;
+    padding: 24px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.chamadoBody h5 {
+    color: #2CC0EC;
+    font-size: clamp(18px, 2.5vw, 26px);
+    margin-bottom: 8px;
+}
+
+.secaoMensagem {
+    display: flex;
+    flex-direction: column;
+}
+
+.messageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px 28px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin: 6px 0;
+}
+
+.messageContainer p {
+    font-size: clamp(15px, 2vw, 22px);
+    line-height: 1.5;
+    margin: 0;
+    color: #222;
+}
+
+.messageRejeitada {
+    border: 2px solid #F51114;
+    background-color: #fff5f5;
+}
+
+.messageAceita {
+    border: 2px solid #28a745;
+    background-color: #f4fff6;
+}
+
+.feedbackRejeitado {
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 6px 14px;
+    border-radius: 16px;
+    background-color: #F51114;
+    color: white;
+    font-size: clamp(13px, 1.6vw, 18px);
+}
+
+.feedbackAceito {
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 6px 14px;
+    border-radius: 16px;
+    background-color: #93FEA6;
+    color: #0a3838;
+    font-size: clamp(13px, 1.6vw, 18px);
+}
+
+.notaContainer {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notaContainer h5 {
+    margin: 0;
+}
+
+.estrelas {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.estrela {
+    font-size: clamp(24px, 3vw, 34px);
+    color: #ccc;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.estrela:hover {
+    transform: scale(1.15);
+}
+
+.estrelaAtiva {
+    color: #2CC0EC;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 14px;
+}
+
+.buttonAceitar {
+    background-color: #93FEA6;
+    color: #0a3838;
+}
+
+.buttonRejeitar {
+    background-color: #F51114;
+    color: white;
+}
+
+.inputContainer {
+    margin-top: auto;
+    display: flex;
+    background-color: #2CC0EC;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 30px;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.inputMessage {
+    flex: 1;
+    min-width: 260px;
+    height: 70px;
+    border-radius: 35px;
+    border: 0;
+    padding: 0 24px;
+    font-size: clamp(16px, 2vw, 22px);
+    outline: none;
+}
+
+.subContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.checkBox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.checkBox input {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkBox label {
+    font-size: clamp(15px, 1.8vw, 20px);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.buttonEnviar {
+    background-color: #93FEA6;
+    color: #0a3838;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 28px;
+    font-size: clamp(16px, 2vw, 22px);
+    width: 100%;
+    max-width: 260px;
+    margin: 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.buttonEnviar:hover {
+    background-color: #7ce891;
+    color: black;
+}
+
+@media screen and (max-width: 900px) {
+    .chamadoHeader {
+        padding: 16px 20px;
+        gap: 12px;
+    }
+
+    .chamadoBody {
+        padding: 16px 20px;
+        gap: 18px;
+    }
+
+    .messageContainer {
+        padding: 16px 18px;
+        border-radius: 20px;
+    }
+
+    .buttonContainer {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .buttonAceitar,
+    .buttonRejeitar {
+        max-width: 100%;
+    }
+
+    .inputContainer {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px 20px;
+        gap: 16px;
+    }
+
+    .inputMessage {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+        height: 70px;
+        min-height: 70px;
+    }
+
+    .subContainer {
+        width: 100%;
+    }
+
+    .checkBox label {
+        white-space: normal;
+    }
+
+    .buttonEnviar {
+        max-width: 100%;
+    }
+}
