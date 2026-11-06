@@ -8,6 +8,11 @@ export default function Header() {
     const [tipoPerfil, setTipoPerfil] = useState('')
     const [fotoPerfil, setFotoPerfil] = useState('')
 
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        nav('/login')
+    }
+
     useEffect(() => {
         async function fetchTipoPerfil() {
             const token = localStorage.getItem('token')
@@ -57,11 +62,20 @@ export default function Header() {
                 <a onClick={() => { nav('/perfil') }}>Perfil</a>
             </div>
 
-            <img
-                src={fotoPerfil || '/logo.png'}
-                className={styles.profileImage}
-                onClick={() => { nav('/perfil') }}
-            ></img>
+            <div className={styles.profileContainer}>
+                <button
+                    className={styles.logoutButton}
+                    onClick={handleLogout}
+                >
+                    Log out
+                </button>
+                <img
+                    src={fotoPerfil || '/logo.png'}
+                    className={styles.profileImage}
+                    onClick={() => nav('/perfil')}
+                    alt="Perfil"
+                />
+            </div>  
         </div>
     )
 }
