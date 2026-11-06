@@ -1,25 +1,51 @@
 import styles from './criar-chamado.module.css'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import axios from 'axios'
 
 export default function CriarChamado() {
-
   const navigate = useNavigate()
-  const handleSubmit = (event) => {
+  const [erro, setErro] = useState('')
+  const [salvando, setSalvando] = useState(false)
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const titulo = event.target.titulo.value
-    const categoria = event.target.categoria.value
-    const prioridade = event.target.prioridade.value
-    const descricao = event.target.descricao.value
+    setErro('')
 
+    const token = localStorage.getItem('token')
+    if (!token) {
+      navigate('/login')
+      return
+    }
 
-    if (!titulo || !categoria || !prioridade || !descricao) {
-      alert("Por favor, preencha todos os campos.")
-    } else {
-      alert(`O chamado foi criado!\nTítulo: ${titulo}\nCategoria: ${categoria}\nPrioridade: ${prioridade}\nDescrição: ${descricao}`)
-      console.log(`Título: ${titulo}\nCategoria: ${categoria}\nPrioridade: ${prioridade}\nDescrição: ${descricao}`)
-      navigate("/perfil")
+    const formulario = event.currentTarget
+    const dados = {
+      titulo: formulario.titulo.value.trim(),
+      categoria: formulario.categoria.value,
+      prioridade: formulario.prioridade.value,
+      descricao: formulario.descricao.value.trim(),
+    }
+
+    setSalvando(true)
+    try {
+      await axios.post('http://localhost:3000/chamados', dados, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      navigate('/solicitante')
+    } catch (err) {
+      console.error('Erro ao criar chamado:', err)
+      setErro(
+        err.response?.data?.response?.message ||
+        err.response?.data?.message ||
+        'Não foi possível salvar o chamado. Tente novamente.'
+      )
+    } finally {
+      setSalvando(false)
     }
   }
+
   return (
     <div className={styles.bodyContainer}>
       <div className={styles.registerBox}>
@@ -49,7 +75,7 @@ export default function CriarChamado() {
           <select id="prioridade" name="prioridade" required>
             <option value="">Selecione...</option>
             <option value="baixa">Baixa</option>
-            <option value="media">Média</option>
+            <option value="média">Média</option>
             <option value="alta">Alta</option>
             <option value="urgente">Urgente</option>
           </select>
@@ -57,7 +83,10 @@ export default function CriarChamado() {
           <label htmlFor="descricao">Descrição</label>
           <textarea id="descricao" name="descricao" placeholder="Descreva o problema" required></textarea>
 
-          <button type="submit" className={styles.btn}>Salvar</button>
+          {erro && <p role="alert">{erro}</p>}
+          <button type="submit" className={styles.btn} disabled={salvando}>
+            {salvando ? 'Salvando...' : 'Salvar'}
+          </button>
         </form>
       </div>
     </div>
