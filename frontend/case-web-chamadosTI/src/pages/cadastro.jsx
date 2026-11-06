@@ -1,20 +1,25 @@
 import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import Feedback from '../components/feedback'
 
 export default function Cadastro() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
+  const [feedback, setFeedback] = useState(null)
+  const [enviando, setEnviando] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setFeedback(null)
+    setEnviando(true)
 
     const form = event.currentTarget
     const usuario = {
-      nome: form.nome.value,
-      email: form.email.value,
+      nome: form.nome.value.trim(),
+      email: form.email.value.trim(),
       senha: form.senha.value,
-      cargo: form.cargo.value,
+      cargo: form.cargo.value.trim(),
       perfil: form.perfil.value
     }
 
@@ -36,16 +41,22 @@ export default function Cadastro() {
       }
 
       localStorage.setItem('token', data.token)
-      alert(data.message || 'Usuário cadastrado com sucesso.')
-      console.log(`Nome: ${usuario.nome}\nEmail: ${usuario.email}\nSenha: ${usuario.senha}\nCargo: ${usuario.cargo}\nPerfil: ${usuario.perfil}`)
-      navigate('/perfil')
+      setFeedback({ tipo: 'sucesso', mensagem: data.message || 'Usuário cadastrado com sucesso.' })
+      window.setTimeout(() => navigate('/perfil'), 1200)
     } catch (error) {
-      alert(error.message)
+      setFeedback({ tipo: 'erro', mensagem: error.message || 'Não foi possível cadastrar.' })
+    } finally {
+      setEnviando(false)
     }
   }
 
   return (
     <div className={styles.bodyContainer}>
+      <Feedback
+        tipo={feedback?.tipo}
+        mensagem={feedback?.mensagem}
+        onClose={() => setFeedback(null)}
+      />
       <div className={`${styles.authBox} ${styles.registerBox}`}>
         <a href="/login" className={styles.backLink}>
           ←
@@ -93,7 +104,9 @@ export default function Cadastro() {
             <option value="técnico">Técnico</option>
           </select>
 
-          <button type="submit" className={styles.btn}>Salvar</button>
+          <button type="submit" className={styles.btn} disabled={enviando}>
+            {enviando ? 'Cadastrando...' : 'Salvar'}
+          </button>
         </form>
       </div>
     </div>

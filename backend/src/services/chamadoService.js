@@ -1,6 +1,53 @@
 import 'dotenv/config';
 import database from '../database/export.js';
 
+async function criarChamado(userId, dados) {
+    const { titulo, descricao, categoria, prioridade } = dados || {};
+    const tituloTratado = typeof titulo === 'string' ? titulo.trim() : '';
+    const descricaoTratada = typeof descricao === 'string' ? descricao.trim() : '';
+    const categoriaTratada = typeof categoria === 'string' ? categoria.trim() : '';
+    const prioridadeTratada = prioridade === 'media' ? 'média' : prioridade;
+    const prioridadesValidas = ['baixa', 'média', 'alta', 'urgente'];
+
+    if (!userId || !tituloTratado || !descricaoTratada || !categoriaTratada || !prioridadeTratada) {
+        return {
+            status: 400,
+            message: "Título, descrição, categoria e prioridade são obrigatórios"
+        };
+    }
+
+    if (!prioridadesValidas.includes(prioridadeTratada)) {
+        return {
+            status: 400,
+            message: "Prioridade inválida"
+        };
+    }
+
+    try {
+        const [chamado] = await database('chamado')
+            .insert({
+                titulo: tituloTratado,
+                descricao: descricaoTratada,
+                categoria: categoriaTratada,
+                prioridade: prioridadeTratada,
+                status: 'aberto',
+                userId
+            })
+            .returning('*');
+
+        return {
+            status: 201,
+            chamado,
+            message: "Chamado criado com sucesso"
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            message: error.message || "Internal server error"
+        };
+    }
+}
+
 async function getChamados(excludeUserId) {
     try {
         const query = database('chamado').select("*");
@@ -224,8 +271,8 @@ async function criarSolucao(chamadoId, dados) {
     }
 }
 
-async function responderSolucao(chamadoId, solucaoId, acao) {
-    if (!chamadoId || !solucaoId || !['aceitar', 'rejeitar'].includes(acao)) {
+async function responderSolucao(chamadoId, solucaoId, acao, userId) {
+    if (!chamadoId || !solucaoId || !userId || !['aceitar', 'rejeitar'].includes(acao)) {
         return {
             status: 400,
             message: "Parâmetros inválidos para responder solução"
@@ -233,53 +280,72 @@ async function responderSolucao(chamadoId, solucaoId, acao) {
     }
 
     try {
-        const chamadoExistente = await database('chamado').select("*").where({ id: chamadoId }).first();
-        if (!chamadoExistente || chamadoExistente.status?.toLowerCase() !== 'resolvido') {
-            return {
-                status: 400,
-                message: "A solução só pode ser aceita ou rejeitada quando o técnico marcar como resolvido"
-            };
-        }
-
-        const solucaoExistente = await database('solucao')
-            .select("*")
-            .where({ id: solucaoId, chamadoId })
-            .first();
-
-        if (!solucaoExistente) {
-            return {
-                status: 404,
-                message: "Solução não encontrada"
-            };
-        }
-
-        const novoStatusSolucao = acao === 'aceitar' ? 'aceita' : 'rejeitada';
-        const novoStatusChamado = acao === 'aceitar' ? 'fechado' : 'aguardando resposta';
-
-        await database('solucao')
-            .where({ chamadoId, status: 'aguardando resposta' })
-            .update({ status: novoStatusSolucao });
-
-        await database('chamado')
-            .where({ id: chamadoId })
-            .update({ status: novoStatusChamado });
-
-        if (acao === 'rejeitar') {
-            const solucoesDoChamado = await database('solucao').select('id').where({ chamadoId });
-            const ids = solucoesDoChamado.map((s) => s.id);
-            if (ids.length > 0) {
-                await database('avaliacao').whereIn('solucaoId', ids).update({ nota: null });
+        return await database.transaction(async (trx) => {
+            const chamadoExistente = await trx('chamado').select("*").where({ id: chamadoId }).first();
+            if (!chamadoExistente) {
+                return {
+                    status: 404,
+                    message: "Chamado não encontrado"
+                };
             }
-        }
 
-        return {
-            status: 200,
-            statusChamado: novoStatusChamado,
-            statusSolucao: novoStatusSolucao,
-            message: acao === 'aceitar'
-                ? "Solução aceita e chamado fechado"
-                : "Solução rejeitada"
-        };
+            if (Number(chamadoExistente.userId) !== Number(userId)) {
+                return {
+                    status: 403,
+                    message: "Somente o solicitante do chamado pode responder à solução"
+                };
+            }
+
+            if (chamadoExistente.status?.toLowerCase() !== 'resolvido') {
+                return {
+                    status: 400,
+                    message: "A solução só pode ser aceita ou rejeitada quando o chamado estiver resolvido"
+                };
+            }
+
+            const solucaoExistente = await trx('solucao')
+                .select("*")
+                .where({ id: solucaoId, chamadoId })
+                .first();
+
+            if (!solucaoExistente) {
+                return {
+                    status: 404,
+                    message: "Solução não encontrada"
+                };
+            }
+
+            if (solucaoExistente.status !== 'aguardando resposta') {
+                return {
+                    status: 409,
+                    message: "Esta solução já foi respondida"
+                };
+            }
+
+            const novoStatusSolucao = acao === 'aceitar' ? 'aceita' : 'rejeitada';
+            const novoStatusChamado = acao === 'aceitar' ? 'fechado' : 'aguardando resposta';
+
+            await trx('solucao')
+                .where({ id: solucaoId, chamadoId, status: 'aguardando resposta' })
+                .update({ status: novoStatusSolucao });
+
+            await trx('chamado')
+                .where({ id: chamadoId })
+                .update({ status: novoStatusChamado });
+
+            if (acao === 'rejeitar') {
+                await trx('avaliacao').where({ solucaoId }).update({ nota: null });
+            }
+
+            return {
+                status: 200,
+                statusChamado: novoStatusChamado,
+                statusSolucao: novoStatusSolucao,
+                message: acao === 'aceitar'
+                    ? "Solução aceita e chamado fechado"
+                    : "Solução rejeitada; chamado voltou para atendimento"
+            };
+        });
     } catch (error) {
         return {
             status: 500,
@@ -540,6 +606,7 @@ async function deleteChamado(chamadoId) {
 }
 
 const chamadoService = {
+    criarChamado,
     getChamados,
     getChamadosByUser,
     getChamado,

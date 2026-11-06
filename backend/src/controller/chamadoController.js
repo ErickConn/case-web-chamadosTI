@@ -1,5 +1,14 @@
 import chamadoService from "../services/chamadoService.js";
 
+const criarChamado = async (req, res) => {
+    try {
+        const response = await chamadoService.criarChamado(req.user?.id, req.body);
+        res.status(response.status || 201).json({ response });
+    } catch (e) {
+        res.status(500).json({ erro: e.message });
+    }
+}
+
 const getChamados = async (req, res) => {
     try {
         const userId = req.user?.id;
@@ -56,7 +65,7 @@ const responderSolucao = async (req, res) => {
         const chamadoId = req.params.id;
         const solucaoId = req.params.solucaoId;
         const { acao } = req.body || {};
-        const response = await chamadoService.responderSolucao(chamadoId, solucaoId, acao);
+        const response = await chamadoService.responderSolucao(chamadoId, solucaoId, acao, req.user?.id);
         res.status(response.status || 200).json({ response });
     } catch (e) {
         res.status(500).json({ erro: e.message });
@@ -104,6 +113,7 @@ const deleteChamado = async (req, res) => {
 }
 
 const chamadoController = {
+    criarChamado,
     getChamados,
     getChamadosByUser,
     getChamado,

@@ -208,6 +208,18 @@
     color: white;
 }
 
+.buttonAceitar:hover {
+    background: #93fea7ad;
+    transition: ease-in-out 0.2s;
+    color: black;
+}
+
+.buttonRejeitar:hover {
+    background-color: #f60206a4;
+    transition: ease-in-out 0.2s;
+    color: black;
+}
+
 .inputContainer {
     margin-top: auto;
     display: flex;

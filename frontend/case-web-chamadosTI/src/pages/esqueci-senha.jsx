@@ -1,16 +1,21 @@
 import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import Feedback from '../components/feedback'
 
 export default function EsqueciSenha() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
+  const [feedback, setFeedback] = useState(null)
+  const [enviando, setEnviando] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setFeedback(null)
+    setEnviando(true)
 
     const form = event.currentTarget
-    const email = form.email.value
+    const email = form.email.value.trim()
     const novaSenha = form.senha.value
 
     try {
@@ -28,16 +33,28 @@ export default function EsqueciSenha() {
         throw new Error(data.message || 'Não foi possível redefinir a senha.')
       }
 
-      alert(data.message)
-      console.log(`Email: ${email}\nNova Senha: ${novaSenha}`)
-      navigate('/login')
+      setFeedback({
+        tipo: 'sucesso',
+        mensagem: data.message || 'Senha redefinida com sucesso.'
+      })
+      window.setTimeout(() => navigate('/login'), 1500)
     } catch (error) {
-      alert(error.message || 'Não foi possível conectar ao servidor.')
+      setFeedback({
+        tipo: 'erro',
+        mensagem: error.message || 'Não foi possível conectar ao servidor.'
+      })
+    } finally {
+      setEnviando(false)
     }
   }
 
   return (
     <div className={styles.bodyContainer}>
+      <Feedback
+        tipo={feedback?.tipo}
+        mensagem={feedback?.mensagem}
+        onClose={() => setFeedback(null)}
+      />
       <div className={`${styles.authBox} ${styles.resetBox}`}>
         <a href="/login" className={styles.backLink}>
           ←
@@ -72,7 +89,9 @@ export default function EsqueciSenha() {
             </span>
           </div>
 
-          <button type="submit" className={styles.btn}>Salvar Nova Senha</button>
+          <button type="submit" className={styles.btn} disabled={enviando}>
+            {enviando ? 'Salvando...' : 'Salvar Nova Senha'}
+          </button>
         </form>
       </div>
     </div>
