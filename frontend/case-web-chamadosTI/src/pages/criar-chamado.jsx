@@ -38,18 +38,20 @@ export default function CriarChamado() {
           <label htmlFor="categoria">Categoria</label>
           <select id="categoria" name="categoria" required>
             <option value="">Selecione...</option>
-            <option value="suporte">1</option>
-            <option value="administrativo">2</option>
-            <option value="gerencia">3</option>
-            <option value="financeiro">4</option>
+            <option value="hardware">Hardware</option>
+            <option value="software">Software</option>
+            <option value="acesso">Acesso</option>
+            <option value="rede">Rede</option>
             <option value="outros">Outros</option>
           </select>
 
           <label htmlFor="prioridade">Prioridade</label>
           <select id="prioridade" name="prioridade" required>
             <option value="">Selecione...</option>
-            <option value="solicitante">1</option>
-            <option value="tecnico">2</option>
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+            <option value="urgente">Urgente</option>
           </select>
 
           <label htmlFor="descricao">Descrição</label>
