@@ -195,9 +195,8 @@ export default function Chamado() {
     const isTecnicoDoChamado =
         usuario &&
         chamado &&
-        (Number(chamado.tecnicoId) === Number(usuario.id) ||
-            usuario.tipo_perfil?.toLowerCase() === "técnico" ||
-            usuario.tipo_perfil?.toLowerCase() === "tecnico");
+        Boolean(chamado.tecnicoId) &&
+        Number(chamado.tecnicoId) === Number(usuario.id);
 
     const isSolicitanteDoChamado =
         usuario &&
