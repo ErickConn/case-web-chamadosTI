@@ -2,15 +2,16 @@ import styles from './criar-chamado.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
+import Feedback from '../components/feedback'
 
 export default function CriarChamado() {
   const navigate = useNavigate()
-  const [erro, setErro] = useState('')
+  const [feedback, setFeedback] = useState(null)
   const [salvando, setSalvando] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    setErro('')
+    setFeedback(null)
 
     const token = localStorage.getItem('token')
     if (!token) {
@@ -28,19 +29,25 @@ export default function CriarChamado() {
 
     setSalvando(true)
     try {
-      await axios.post('http://localhost:3000/chamados', dados, {
+      const response = await axios.post('http://localhost:3000/chamados', dados, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      navigate('/solicitante')
+      setFeedback({
+        tipo: 'sucesso',
+        mensagem: response.data.response?.message || 'Chamado criado com sucesso.'
+      })
+      window.setTimeout(() => navigate('/solicitante'), 1200)
     } catch (err) {
       console.error('Erro ao criar chamado:', err)
-      setErro(
-        err.response?.data?.response?.message ||
-        err.response?.data?.message ||
-        'Não foi possível salvar o chamado. Tente novamente.'
-      )
+      setFeedback({
+        tipo: 'erro',
+        mensagem:
+          err.response?.data?.response?.message ||
+          err.response?.data?.message ||
+          'Não foi possível salvar o chamado. Tente novamente.'
+      })
     } finally {
       setSalvando(false)
     }
@@ -48,6 +55,11 @@ export default function CriarChamado() {
 
   return (
     <div className={styles.bodyContainer}>
+      <Feedback
+        tipo={feedback?.tipo}
+        mensagem={feedback?.mensagem}
+        onClose={() => setFeedback(null)}
+      />
       <div className={styles.registerBox}>
         <a onClick={() => navigate(-1)} className={styles.backLink}>
           ←
@@ -83,7 +95,6 @@ export default function CriarChamado() {
           <label htmlFor="descricao">Descrição</label>
           <textarea id="descricao" name="descricao" placeholder="Descreva o problema" required></textarea>
 
-          {erro && <p role="alert">{erro}</p>}
           <button type="submit" className={styles.btn} disabled={salvando}>
             {salvando ? 'Salvando...' : 'Salvar'}
           </button>

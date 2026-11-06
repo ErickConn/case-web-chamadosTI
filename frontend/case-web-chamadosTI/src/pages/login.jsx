@@ -1,10 +1,13 @@
 import styles from './auth.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import Feedback from '../components/feedback'
 
 export default function Login() {
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
+    const [feedback, setFeedback] = useState(null)
+    const [enviando, setEnviando] = useState(false)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
@@ -12,9 +15,11 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+        setFeedback(null)
+        setEnviando(true)
 
         const form = event.currentTarget
-        const email = form.email.value
+        const email = form.email.value.trim()
         const senha = form.senha.value
 
         try {
@@ -29,17 +34,23 @@ export default function Login() {
             if (!response.ok) {
                 throw new Error(data.message || 'Não foi possível fazer login.')
             }
-
+            setFeedback({ tipo: 'sucesso', mensagem: data.message || 'Usuário cadastrado com sucesso.' })
             localStorage.setItem('token', data.token)
-            console.log(`Email: ${email}\nSenha: ${senha}`)
             navigate('/perfil')
         } catch (error) {
-            alert(error.message)
+            setFeedback({ tipo: 'erro', mensagem: error.message || 'Não foi possível fazer login.' })
+        } finally {
+            setEnviando(false)
         }
     }
 
     return (
         <div className={styles.bodyContainer}>
+            <Feedback
+                tipo={feedback?.tipo}
+                mensagem={feedback?.mensagem}
+                onClose={() => setFeedback(null)}
+            />
             <div className={`${styles.authBox} ${styles.loginBox}`}>
                 <div className={styles.logo}>
                     <img src='/logo.png' alt="Helpdesk Logo"></img>
@@ -59,7 +70,7 @@ export default function Login() {
                             required 
                         />
                         <span 
-                            onClick={() => setShowPassword(!showPassword)} 
+                            onClick={togglePasswordVisibility}
                             className={styles.togglePassword}
                         >
                             <img 
@@ -74,7 +85,9 @@ export default function Login() {
 
 
                     <a href="/esqueci-senha" className={styles.forgot}>Esqueci minha senha</a>
-                    <button type="submit" className={styles.btn}>Entrar</button>
+                    <button type="submit" className={styles.btn} disabled={enviando}>
+                        {enviando ? 'Entrando...' : 'Entrar'}
+                    </button>
                     <a href="/cadastro" className={styles.register}>Ainda não tenho conta</a>
                 </form>
             </div>

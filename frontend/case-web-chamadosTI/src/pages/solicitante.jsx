@@ -6,6 +6,7 @@ import Dashboard from '../components/dashboard'
 import FiltrosChamados from '../components/filtrosChamados'
 import TabelaChamados from '../components/tabelaChamados'
 import AtenderChamadoModal from '../components/atenderChamadoModal'
+import Feedback from '../components/feedback'
 import styles from './solicitante.module.css'
 
 function aplicarFiltros(lista, filtros, usuarioId) {
@@ -40,6 +41,7 @@ export default function Solicitante() {
     const [usuario, setUsuario] = useState(null)
     const [chamadoSelecionado, setChamadoSelecionado] = useState(null)
     const [atenderModalAberto, setAtenderModalAberto] = useState(false)
+    const [feedback, setFeedback] = useState(null)
     const [filtrosMeus, setFiltrosMeus] = useState({
         status: '',
         prioridade: '',
@@ -147,10 +149,14 @@ export default function Solicitante() {
             )
             setAtenderModalAberto(false)
             setChamadoSelecionado(null)
+            setFeedback({ tipo: 'sucesso', mensagem: 'Chamado atribuído a você.' })
             fetchDados()
         } catch (err) {
             console.error('Erro ao atribuir chamado:', err)
-            alert(err.response?.data?.response?.message || 'Não foi possível atender este chamado.')
+            setFeedback({
+                tipo: 'erro',
+                mensagem: err.response?.data?.response?.message || 'Não foi possível atender este chamado.'
+            })
             setAtenderModalAberto(false)
         }
     }
@@ -182,6 +188,11 @@ export default function Solicitante() {
     return (
         <>
             <Header />
+            <Feedback
+                tipo={feedback?.tipo}
+                mensagem={feedback?.mensagem}
+                onClose={() => setFeedback(null)}
+            />
             <Dashboard dados={dadosDashboard} />
             <div className={styles.chamadosContainer}>
                 <div className={styles.chamadosHeader}>

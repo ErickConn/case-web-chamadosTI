@@ -5,6 +5,7 @@ import Header from "../components/header"
 import SolucaoModal from "../components/solucaoModal"
 import UpdateChamadoModal from "../components/updateChamadoModal"
 import DeleteChamadoModal from "../components/deleteChamadoModal"
+import Feedback from "../components/feedback"
 import styles from "./chamado.module.css"
 
 export default function Chamado() {
@@ -16,6 +17,7 @@ export default function Chamado() {
     const [mensagem, setMensagem] = useState("");
     const [nota, setNota] = useState(0);
     const [hoverNota, setHoverNota] = useState(0);
+    const [feedback, setFeedback] = useState(null);
     const [marcarResolvido, setMarcarResolvido] = useState(false);
     const [updateModalAberto, setUpdateModalAberto] = useState(false);
     const [deleteModalAberto, setDeleteModalAberto] = useState(false);
@@ -104,7 +106,10 @@ export default function Chamado() {
             navigate("/");
         } catch (err) {
             console.error("Erro ao excluir chamado:", err);
-            alert(err.response?.data?.response?.message || "Erro ao excluir chamado.");
+            setFeedback({
+                tipo: "erro",
+                mensagem: err.response?.data?.response?.message || "Erro ao excluir chamado."
+            });
             setDeleteModalAberto(false);
         }
     }
@@ -135,6 +140,10 @@ export default function Chamado() {
             fetchChamado();
         } catch (err) {
             console.error("Erro ao salvar nota:", err);
+            setFeedback({
+                tipo: "erro",
+                mensagem: err.response?.data?.response?.message || "Erro ao salvar a avaliação."
+            });
         }
     }
 
@@ -164,7 +173,10 @@ export default function Chamado() {
                 fetchChamado();
             } catch (err) {
                 console.error("Erro ao responder solução:", err);
-                alert(err.response?.data?.response?.message || "Erro ao responder solução.");
+                setFeedback({
+                    tipo: "erro",
+                    mensagem: err.response?.data?.response?.message || "Erro ao responder solução."
+                });
                 fecharModalSolucao();
             }
         } else {
@@ -228,7 +240,10 @@ export default function Chamado() {
             fetchChamado();
         } catch (err) {
             console.error("Erro ao enviar mensagem:", err);
-            alert(err.response?.data?.response?.message || "Não foi possível enviar a mensagem.");
+            setFeedback({
+                tipo: "erro",
+                mensagem: err.response?.data?.response?.message || "Não foi possível enviar a mensagem."
+            });
         }
     }
 
@@ -238,6 +253,11 @@ export default function Chamado() {
     return (
         <div className={styles.pageContainer}>
             <Header />
+            <Feedback
+                tipo={feedback?.tipo}
+                mensagem={feedback?.mensagem}
+                onClose={() => setFeedback(null)}
+            />
             <div className={styles.chamadoHeader}>
                 <span className={styles.closeBtn} onClick={() => navigate(-1)}>X</span>
                 <div className={styles.headerInfo}>
