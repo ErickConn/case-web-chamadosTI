@@ -32,11 +32,16 @@ export default function TabelaChamados({
                         Boolean(chamado.tecnicoId) &&
                         Number(chamado.tecnicoId) !== Number(usuarioId)
 
-                    const textoBotao = atribuidoAoUsuario
+                    const isFechado = chamado.status?.toLowerCase() === 'fechado'
+
+                    const textoBase = atribuidoAoUsuario
                         ? 'conversar'
                         : atribuidoAOutro
                         ? 'indisponível'
                         : tituloBotão
+
+                    const textoBotao =
+                        textoBase === 'conversar' && isFechado ? 'visualizar' : textoBase
 
                     return (
                         <tr key={chamado.id} className={styles.tableData}>

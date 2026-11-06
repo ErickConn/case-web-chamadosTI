@@ -326,7 +326,7 @@ async function responderSolucao(chamadoId, solucaoId, acao, userId) {
             const novoStatusChamado = acao === 'aceitar' ? 'fechado' : 'aguardando resposta';
 
             await trx('solucao')
-                .where({ id: solucaoId, chamadoId, status: 'aguardando resposta' })
+                .where({ chamadoId, status: 'aguardando resposta' })
                 .update({ status: novoStatusSolucao });
 
             await trx('chamado')
@@ -334,7 +334,11 @@ async function responderSolucao(chamadoId, solucaoId, acao, userId) {
                 .update({ status: novoStatusChamado });
 
             if (acao === 'rejeitar') {
-                await trx('avaliacao').where({ solucaoId }).update({ nota: null });
+                const solucoesDoChamado = await trx('solucao').select('id').where({ chamadoId });
+                const ids = solucoesDoChamado.map((s) => s.id);
+                if (ids.length > 0) {
+                    await trx('avaliacao').whereIn('solucaoId', ids).update({ nota: null });
+                }
             }
 
             return {
