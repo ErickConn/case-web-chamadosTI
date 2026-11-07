@@ -8,7 +8,7 @@ export default function UpdateChamadoModal({
     onSave,
 }) {
     const [titulo, setTitulo] = useState('');
-    const [categoria, setCategoria] = useState('hardware');
+    const [categoria, setCategoria] = useState('Hardware');
     const [prioridade, setPrioridade] = useState('baixa');
     const [descricao, setDescricao] = useState('');
     const [carregando, setCarregando] = useState(false);
@@ -16,8 +16,11 @@ export default function UpdateChamadoModal({
 
     useEffect(() => {
         if (isOpen && chamadoAtual) {
+            const cat = chamadoAtual.categoria
+                ? chamadoAtual.categoria.charAt(0).toUpperCase() + chamadoAtual.categoria.slice(1).toLowerCase()
+                : 'Hardware';
             setTitulo(chamadoAtual.titulo || '');
-            setCategoria(chamadoAtual.categoria?.toLowerCase() || 'hardware');
+            setCategoria(cat);
             setPrioridade(chamadoAtual.prioridade?.toLowerCase() || 'baixa');
             setDescricao(chamadoAtual.descricao || '');
             setErro('');
@@ -118,11 +121,11 @@ export default function UpdateChamadoModal({
                                             value={categoria}
                                             onChange={(e) => setCategoria(e.target.value)}
                                         >
-                                            <option value="hardware">Hardware</option>
-                                            <option value="software">Software</option>
-                                            <option value="rede">Rede</option>
-                                            <option value="acesso">Acesso</option>
-                                            <option value="outros">Outros</option>
+                                            <option value="Hardware">Hardware</option>
+                                            <option value="Software">Software</option>
+                                            <option value="Rede">Rede</option>
+                                            <option value="Acesso">Acesso</option>
+                                            <option value="Outros">Outros</option>
                                         </select>
                                     </div>
 

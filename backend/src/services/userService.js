@@ -76,7 +76,27 @@ async function deleteUser(userId) {
     }
 
     try {
-        const user = await database('usuario').where({ id: userId }).delete();
+        await database.transaction(async (trx) => {
+            await trx('chamado').where({ tecnicoId: userId }).update({ tecnicoId: null });
+
+            const chamadosUsuario = await trx('chamado').select('id').where({ userId });
+            const chamadoIds = chamadosUsuario.map((c) => c.id);
+
+            if (chamadoIds.length > 0) {
+                const solucoes = await trx('solucao').select('id').whereIn('chamadoId', chamadoIds);
+                const solucaoIds = solucoes.map((s) => s.id);
+
+                if (solucaoIds.length > 0) {
+                    await trx('avaliacao').whereIn('solucaoId', solucaoIds).delete();
+                    await trx('solucao').whereIn('chamadoId', chamadoIds).delete();
+                }
+
+                await trx('chamado').whereIn('id', chamadoIds).delete();
+            }
+
+            await trx('usuario').where({ id: userId }).delete();
+        });
+
         return {
             status: 200,
             message: "User deleted sucessfully"
