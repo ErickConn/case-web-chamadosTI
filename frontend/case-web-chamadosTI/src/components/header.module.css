@@ -1,0 +1,130 @@
+.headerContainer {
+    min-height: 100px;
+    height: 147px;
+    width: 100%;
+    background-color: #2CC0EC;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.logoContainer {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+    }
+}
+
+.menuContainer {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    height: 100%;
+    align-items: end;
+    margin-bottom: 30px;
+    width: 100%;
+    margin-right: 40px;
+
+    a {
+        cursor: pointer;
+        font-size: 24px;
+        white-space: nowrap;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a:hover {
+        color: #ffffffd3;
+    }
+}
+
+.profileImage {
+    position: relative;
+    cursor: pointer;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.profileContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 20px;
+    position: relative;
+}
+
+.logoutButton {
+    margin-right: 20px;
+    gap: 5px;
+    background-color: #F60206;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1px 5px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    position: absolute;
+    top: -60px;
+    left: 80%;
+    transform: translateX(-50%);
+}
+
+.logoutButton:hover {
+    background-color: #f60206a4;
+    transition: ease-in-out 0.2s;
+    color: black;
+}
+
+
+@media screen and (max-width: 900px) {
+    .headerContainer {
+        height: auto;
+        padding: 10px 16px;
+        flex-wrap: wrap;
+    }
+
+    .logoContainer {
+        margin: 0;
+
+        img {
+            width: 70px;
+            height: 70px;
+        }
+
+        span {
+            display: none;
+        }
+    }
+
+    .menuContainer {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin: 10px 0 0 0;
+        height: auto;
+        gap: 15px;
+
+        a {
+            font-size: 16px;
+        }
+    }
+
+    .profileImage {
+        right: 0;
+        width: 50px;
+        height: 50px;
+    }
+}

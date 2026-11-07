@@ -1,0 +1,32 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './index.css'
+import Perfil from './pages/perfil.jsx'
+import Login from './pages/login.jsx'
+import Cadastro from './pages/cadastro.jsx'
+import EsqueciSenha from './pages/esqueci-senha.jsx'
+import Sobre from './pages/sobre.jsx'
+import Solicitante from './pages/solicitante.jsx'
+import CriarChamado from './pages/criar-chamado.jsx'
+import Chamado from './pages/chamado.jsx'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Solicitante />} />
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/esqueci-senha" element={<EsqueciSenha />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/solicitante" element={<Solicitante />} />
+        <Route path="/criar-chamado" element={<CriarChamado />} />
+        <Route path="/chamado" element={<Chamado />} />
+        <Route path="/chamado/:id" element={<Chamado />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
+)

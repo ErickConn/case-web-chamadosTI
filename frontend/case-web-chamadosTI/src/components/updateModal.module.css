@@ -1,0 +1,93 @@
+.modalContent {
+    font-family: 'Inria Serif', serif;
+    background-color: #FEFAEA;
+    border-radius: 20px;
+    border: 2px solid #2CC0EC;
+    color: #2CC0EC;
+}
+
+.modalContent label {
+    color: #2CC0EC;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.modalContent input,
+.modalContent select {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    height: 45px;
+    padding: 8px 12px;
+    border: 1px solid #2CC0EC;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #0a3838;
+}
+
+.modalContent select {
+    padding-right: 36px;
+}
+
+.modalContent select option {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    color: #0a3838;
+    background-color: #ffffff;
+}
+
+.previewImage {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2CC0EC;
+}
+
+.previewText {
+    font-family: 'Inria Serif', serif;
+    font-size: 16px;
+    color: #0a3838;
+}
+
+.modalTitle {
+    color: #2CC0EC;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.cancelButton {
+    background-color: #6c757d;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 10px 28px;
+    font-family: 'Inria Serif', serif;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    min-width: 140px;
+    transition: all 0.2s ease-in-out;
+}
+
+.cancelButton:hover {
+    background-color: #5c636a;
+    color: #ffffff;
+}
+
+.saveButton {
+    background-color: #93FEA6;
+    color: #0a3838;
+    border-radius: 20px;
+    padding: 10px 28px;
+    font-family: 'Inria Serif', serif;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    min-width: 180px;
+    transition: all 0.2s ease-in-out;
+}
+
+.saveButton:hover {
+    background-color: #7ce891;
+    color: #000000;
+}

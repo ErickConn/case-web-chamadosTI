@@ -1,0 +1,114 @@
+import styles from './auth.module.css'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import Feedback from '../components/feedback'
+
+export default function Cadastro() {
+  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
+  const [feedback, setFeedback] = useState(null)
+  const [enviando, setEnviando] = useState(false)
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setFeedback(null)
+    setEnviando(true)
+
+    const form = event.currentTarget
+    const usuario = {
+      nome: form.nome.value.trim(),
+      email: form.email.value.trim(),
+      senha: form.senha.value,
+      cargo: form.cargo.value.trim(),
+      perfil: form.perfil.value
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/cadastro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(usuario)
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Não foi possível cadastrar.')
+      }
+
+      if (!data.token) {
+        throw new Error('O servidor não retornou o token de autenticação.')
+      }
+
+      localStorage.setItem('token', data.token)
+      setFeedback({ tipo: 'sucesso', mensagem: data.message || 'Usuário cadastrado com sucesso.' })
+      window.setTimeout(() => navigate('/perfil'), 1200)
+    } catch (error) {
+      setFeedback({ tipo: 'erro', mensagem: error.message || 'Não foi possível cadastrar.' })
+    } finally {
+      setEnviando(false)
+    }
+  }
+
+  return (
+    <div className={styles.bodyContainer}>
+      <Feedback
+        tipo={feedback?.tipo}
+        mensagem={feedback?.mensagem}
+        onClose={() => setFeedback(null)}
+      />
+      <div className={`${styles.authBox} ${styles.registerBox}`}>
+        <a href="/login" className={styles.backLink}>
+          ←
+        </a>
+        <div className={styles.logo}>
+          <img src="/logo.png" alt="Helpdesk Logo" />
+          <h2>Cadastro</h2>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="nome">Nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required />
+
+          <label htmlFor="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Digite seu email" required />
+
+          <label htmlFor="senha">Senha</label>
+          <div className={styles.passwordContainer}>
+            <input 
+              type={showPassword ? "text" : "password"} 
+              id="senha" 
+              name="senha" 
+              placeholder="Digite sua senha" 
+              required 
+            />
+            <span 
+              onClick={() => setShowPassword(!showPassword)} 
+              className={styles.togglePassword}
+            >
+              <img 
+                src={showPassword 
+                  ? "/icone-senha/esconder.png" 
+                  : "/icone-senha/mostrar.png"} 
+                alt={showPassword ? "Ocultar senha" : "Mostrar senha"} 
+              />
+            </span>
+          </div>
+
+          <label htmlFor="cargo">Cargo/Setor</label>
+          <input type="text" id="cargo" name="cargo" placeholder="Digite seu cargo/setor (Ex: Desenvolvedor, Financeiro)" required />
+
+          <label htmlFor="perfil">Tipo de Perfil</label>
+          <select id="perfil" name="perfil" required>
+            <option value="">Selecione...</option>
+            <option value="solicitante">Solicitante</option>
+            <option value="técnico">Técnico</option>
+          </select>
+
+          <button type="submit" className={styles.btn} disabled={enviando}>
+            {enviando ? 'Cadastrando...' : 'Salvar'}
+          </button>
+        </form>
+      </div>
+    </div>
+  )
+}

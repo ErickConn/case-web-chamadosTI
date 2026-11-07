@@ -1,0 +1,28 @@
+.filtros {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 20px 0;
+}
+
+.filtro {
+    background-color: #2CC0EC;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+@media screen and (max-width: 900px) {
+    .filtros {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .filtro {
+        flex: 1;
+        min-width: 120px;
+    }
+}
+
